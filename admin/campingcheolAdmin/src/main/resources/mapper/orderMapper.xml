@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.admin.campingcheol.manage.dao.OrderDAO">
+
+	<!-- 전체 총 캠핑용품 주문 -->
+	<select id="countOrder" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT w1.*
+			FROM(SELECT g.*
+			    FROM(SELECT rownum as rm, f.prodOrderNum, f.prodOrderCheck, f.orderData, f.userID, f.prodTitle, f.totalProdCount, f.totalPayAmt, f.prodOrderMethod, f.prodPayCheck
+					    FROM (
+					        SELECT z.*
+							FROM(SELECT SUM(e.prodpayAmt) OVER (PARTITION BY e.prodOrderNum) AS totalPayAmt, COUNT(e.prodDetailNum) OVER (PARTITION BY e.prodOrderNum) AS totalProdCount,
+									ROW_NUMBER() OVER (PARTITION BY e.prodOrderNum ORDER BY e.prodDetailNum) as rn, e.*
+							    FROM ( SELECT b.prodOrderNum, c.prodOrderCheck, b.orderData, a.userID, c.prodDetailNum, d.prodTitle, c.prodpayAmt, c.prodOrderMethod, c.prodPayCheck
+							            FROM userinfo a
+							            INNER JOIN prodOrder b ON a.userkeynum = b.userkeynum
+							            INNER JOIN prodOrderDetail c ON b.prodOrderNum = c.prodOrderNum
+							            INNER JOIN prod d ON c.prodKeyNum = d.prodKeyNum
+							            ORDER BY b.prodOrderNum desc
+							        ) e
+							    ORDER BY e.prodOrderNum desc)z
+														<if test='startDate != "a" and endDate != "a"'>    
+							WHERE z.orderData BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            	</if>
+			            )f
+			        WHERE f.rn = 1
+			        )g
+			    <if test="table eq 'all'">
+		        </if>    
+			    <if test="table eq 'new'">
+		        	WHERE g.prodOrderCheck = '1'
+		        </if>
+		        <if test="table eq 'fin'">
+		        	WHERE g.prodOrderCheck = '2'
+		        </if>    
+			    )w1
+			<if test="searchWord != null">
+		         <if test="searchKey eq 'id'">
+		            WHERE w1.userID LIKE #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'ordernum'">
+		            WHERE w1.prodOrderNum LIKE #{searchWord}
+		         </if>
+		    </if>     
+			)w2
+	</select>
+	
+	<!-- 전체 캠핑용품 주문 조회 -->
+	<select id="listAllOrder" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="OrderDTO">
+		SELECT w2.*
+		FROM(SELECT rownum as rm, w1.*
+			FROM(SELECT  g.*
+			    FROM(SELECT  f.prodOrderNum, f.prodOrderCheck, f.orderData, f.userID, f.prodTitle, f.totalProdCount, f.totalPayAmt, f.prodOrderMethod, f.prodPayCheck
+					    FROM (
+					        SELECT z.*
+							FROM(SELECT SUM(e.prodpayAmt) OVER (PARTITION BY e.prodOrderNum) AS totalPayAmt, COUNT(e.prodDetailNum) OVER (PARTITION BY e.prodOrderNum) AS totalProdCount,
+									ROW_NUMBER() OVER (PARTITION BY e.prodOrderNum ORDER BY e.prodDetailNum) as rn, e.*
+							    FROM ( SELECT b.prodOrderNum, c.prodOrderCheck, b.orderData, a.userID, c.prodDetailNum, d.prodTitle, c.prodpayAmt, c.prodOrderMethod, c.prodPayCheck
+							            FROM userinfo a
+							            INNER JOIN prodOrder b ON a.userkeynum = b.userkeynum
+							            INNER JOIN prodOrderDetail c ON b.prodOrderNum = c.prodOrderNum
+							            INNER JOIN prod d ON c.prodKeyNum = d.prodKeyNum
+							            ORDER BY b.prodOrderNum desc
+							        ) e
+							    ORDER BY e.prodOrderNum desc)z
+							<if test='startDate != "a" and endDate != "a"'>    
+							WHERE z.orderData BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            	</if>
+			            )f
+			        WHERE f.rn = 1
+			        )g
+			    <if test="table eq 'all'">
+		        </if>    
+			    <if test="table eq 'new'">
+		        	WHERE g.prodOrderCheck = '1'
+		        </if>
+		        <if test="table eq 'fin'">
+		        	WHERE g.prodOrderCheck = '2'
+		        </if>    
+			    )w1
+			<if test="searchWord != null">
+		         <if test="searchKey eq 'id'">
+		            WHERE w1.userID LIKE #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'ordernum'">
+		            WHERE w1.prodOrderNum LIKE #{searchWord}
+		         </if>
+		    </if>     
+			)w2
+		WHERE w2.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 주문상태 변경 (1신규주문 -> 2발주확인) -->
+	<update id="UpdateOrderCheck" parameterType="String">
+		UPDATE prodOrderDetail
+		SET prodOrderCheck = 2
+		WHERE prodOrderNum = #{prodOrderNum}
+	</update>
+	
+	
+	<!-- 주문 상세보기1 - 주문정보-->
+	<select id="listDetailOrder" parameterType="String" resultType="OrderDTO">
+		SELECT f.prodOrderNum, f.prodOrderCheck, f.orderData, f.userID, f.userName, f.pOrderRecName, f.pOrderContact, f.pOrderRecAddr, f.pOrderMessage, f.totalProdCount, f.totalPayAmt, f.prodOrderMethod, f.prodPayCheck
+	    FROM (
+	        SELECT SUM(e.prodpayAmt) OVER (PARTITION BY e.prodOrderNum) AS totalPayAmt, COUNT(e.prodDetailNum) OVER (PARTITION BY e.prodOrderNum) AS totalProdCount,
+	        ROW_NUMBER() OVER (PARTITION BY e.prodOrderNum ORDER BY e.prodDetailNum) as rn, e.*
+	        FROM (
+	            SELECT b.prodOrderNum, c.prodOrderCheck, b.orderData, a.userID, a.userName, b.pOrderRecName, b.pOrderContact, b.pOrderRecAddr, c.prodDetailNum, b.pOrderMessage, c.prodpayAmt, c.prodOrderMethod, c.prodPayCheck
+	            FROM userinfo a
+	            INNER JOIN prodOrder b ON a.userkeynum = b.userkeynum
+	            INNER JOIN prodOrderDetail c ON b.prodOrderNum = c.prodOrderNum
+	            INNER JOIN prod d ON c.prodKeyNum = d.prodKeyNum            
+	        ) e
+	        ORDER BY e.prodOrderNum desc) f
+	    WHERE f.rn = 1
+	    AND f.prodOrderNum=#{prodOrderNum}
+    </select>
+    
+    <!-- 주문 상세보기2 - 상품정보-->
+	<select id="listDetailOrderProd" parameterType="String" resultType="OrderDTO">
+		SELECT t2.*
+		FROM(SELECT rownum as prodrm, t1.*
+		    FROM(SELECT b.prodOrderNum, c.prodDetailNum, d.prodImage, d.prodTitle, d.prodPrice, c.prodCartCount, c.prodpayAmt
+		        FROM userinfo a
+		        INNER JOIN prodOrder b ON a.userkeynum = b.userkeynum
+		        INNER JOIN prodOrderDetail c ON b.prodOrderNum = c.prodOrderNum
+		        INNER JOIN prod d ON c.prodKeyNum = d.prodKeyNum
+		        WHERE c.prodOrderNum=#{prodOrderNum}
+		        ORDER BY c.prodDetailNum)t1)t2
+    </select>
+	
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<!-- 전체 총 캠핑장 예약 -->
+	<select id="countReserv" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT rownum as rm, c.*
+					FROM (SELECT y.*
+							FROM(SELECT z.*
+							    FROM(SELECT t2.campReservNum, t1.userID, t1.userName, t1.userPhone, t4.campName, t2.campRoom, t2.campRoomCount, t2.campReservPerson, t2.campReservStart, t2.campReservEnd, t2.campReservDate, t3.campPayAmt, t2.campReservCheck
+							        FROM userinfo t1
+							        INNER JOIN campReserv t2 ON t1.userkeynum = t2.userkeynum
+							        INNER JOIN campPay t3 ON t2.campReservNum = t3.campReservNum
+							        INNER JOIN campsite t4 ON t3.campKeyNum = t4.campKeyNum
+							        ORDER BY campReservNum DESC)z
+							    <if test='state != "a" and category != "a"'>        
+								WHERE z.campReservStart BETWEEN TO_DATE(#{state}, 'YYYYMMDD') AND TO_DATE(#{category})
+								</if>
+								)y
+							<if test="searchWord != null">
+						         <if test="searchKey eq 'campReservNum'">
+						           WHERE y.campReservNum = #{searchWord}
+						         </if>
+						         <if test="searchKey eq 'userName'">
+						            WHERE y.userName = #{searchWord}
+						         </if>
+						         <if test="searchKey eq 'campName'">
+						            WHERE y.userID = #{searchWord}
+						         </if>
+						    </if>
+						)c
+					)d
+	</select>
+	
+	<!-- 전체 캠핑장 예약 조회 -->
+	<select id="listAllReserv" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="ReservDTO">
+		SELECT d.*
+				FROM(SELECT rownum as rm, c.*
+					FROM (SELECT y.*
+							FROM(SELECT z.*
+							    FROM(SELECT t2.campReservNum, t1.userID, t1.userName, t1.userPhone, t4.campName, t2.campRoom, t2.campRoomCount, t2.campReservPerson, t2.campReservStart, t2.campReservEnd, t2.campReservDate, t3.campPayAmt, t2.campReservCheck
+							        FROM userinfo t1
+							        INNER JOIN campReserv t2 ON t1.userkeynum = t2.userkeynum
+							        INNER JOIN campPay t3 ON t2.campReservNum = t3.campReservNum
+							        INNER JOIN campsite t4 ON t3.campKeyNum = t4.campKeyNum
+							        ORDER BY campReservNum DESC)z
+							    <if test='state != "a" and category != "a"'>        
+								WHERE z.campReservStart BETWEEN TO_DATE(#{state}, 'YYYYMMDD') AND TO_DATE(#{category})
+								</if>
+								)y
+							<if test="searchWord != null">
+						         <if test="searchKey eq 'campReservNum'">
+						           WHERE y.campReservNum = #{searchWord}
+						         </if>
+						         <if test="searchKey eq 'userName'">
+						            WHERE y.userName = #{searchWord}
+						         </if>
+						         <if test="searchKey eq 'campName'">
+						            WHERE y.userID = #{searchWord}
+						         </if>
+						    </if>
+						)c
+					)d
+		WHERE d.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	
+		
+	
+</mapper>

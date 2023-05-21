@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.admin.campingcheol.notice.dao.NoticeDAO">
+   <select id="count" resultType="int">
+      SELECT count(*) FROM notice   
+   </select>
+
+
+<select id="list" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="NoticeDTO">
+      <![CDATA[
+ select b.*            
+from(select rownum as rm, a.*            
+from(select *
+     from notice 
+     order by noticeNum desc)a)b
+      WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
+      ]]>
+</select>
+
+<insert id="save" parameterType="NoticeDTO">
+  INSERT INTO notice (noticeNum, adminId, noticeTitle, noticeContent, noticeRegdate, noticeReadCount, noticeState, noticeFile)
+  VALUES (noticeNum_seq.nextval, 'admin', #{noticeTitle}, #{noticeContent}, sysdate, 0, #{noticeState},
+  <if test="noticeFile != null">
+    #{noticeFile}
+  </if>
+  <if test="noticeFile == null">
+    null
+  </if>)
+</insert>
+
+
+
+
+<update id="readCount" parameterType="int">
+   UPDATE notice
+   SET noticeReadCount = noticeReadCount
+   WHERE noticeNum=#{noticeNum}
+</update>
+
+<select id="content" parameterType="int" resultType="NoticeDTO">
+   SELECT b.*
+   FROM notice b
+   WHERE noticeNum=#{noticeNum} 
+</select>
+
+<update id="update" parameterType="NoticeDTO">
+   UPDATE notice
+   SET noticeTitle=#{noticeTitle}, noticeContent=#{noticeContent}, noticeState=#{noticeState}
+   <if test="noticeFile!=null">,noticeFile =#{noticeFile}</if>
+   
+   WHERE noticeNum=#{noticeNum}
+</update>
+
+<delete id="delete" parameterType="int">
+DELETE FROM notice
+WHERE noticeNum=#{noticeNum}
+</delete>
+
+
+
+   <!-- ///////////////////////검색매퍼교체전/////////////////////////  -->
+
+<!--<select id="searchcount" parameterType="map" resultType="int">
+   select count(*)      
+from(select rownum as rm, a.*     
+ from(select * from notice
+      order by noticeNum desc)a
+      
+    <if test="searchWord != null">
+         <if test="searchKey eq 'noticeTitle'">
+             WHERE noticeTitle LIKE '%'||#{searchWord}||'%'
+         </if>
+          <if test="searchKey eq 'noticeContent'">
+             WHERE noticeContent LIKE '%'||#{searchWord}||'%'
+         </if>
+         
+          <if test="searchKey eq 'all'">
+              where noticeContent LIKE '%'||#{searchWord}||'%'
+             or noticeTitle LIKE '%'||#{searchWord}||'%'
+         </if>
+             <if test="table eq 'on'">
+              where noticeState = 1
+              </if>
+            <if test="table eq 'off'">
+              where noticeState = 2
+              </if>
+            <if test="table eq 'plus'">
+              where noticeState = 1
+              or noticeState = 2
+              </if>
+              
+        </if>
+        )b
+</select>
+
+
+<select id="searchlist" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="NoticeDTO">
+select b.*        
+from(select rownum as rm, a.*     
+ from(select * from notice
+      order by noticeNum desc)a
+      
+    <if test="searchWord != null">
+         <if test="searchKey eq 'noticeTitle'">
+             WHERE noticeTitle LIKE '%'||#{searchWord}||'%'
+         </if>
+          <if test="searchKey eq 'noticeContent'">
+             WHERE noticeContent LIKE '%'||#{searchWord}||'%'
+         </if>
+         
+          <if test="searchKey eq 'all'">
+              where noticeContent LIKE '%'||#{searchWord}||'%'
+             or noticeTitle LIKE '%'||#{searchWord}||'%'
+         </if>
+         <if test="searchKey eq 'on'">
+              where noticeState = 1
+              </if>
+            <if test="searchKey eq 'off'">
+              where noticeState = 2
+              </if>
+            <if test="searchKey eq 'plus'">
+              where noticeState = 1
+              or noticeState = 2
+              </if>
+        </if>
+        )b
+               
+WHERE b.rm BETWEEN #{startRow} AND #{endRow}
+
+</select>
+-->
+
+  <!--///////////////////////매퍼 table 추가/////////////////////////-->
+
+<!--<select id="searchcount" parameterType="map" resultType="int">
+SELECT COUNT(*)
+FROM (
+  SELECT rownum AS rm, a.*
+  FROM (
+    SELECT *
+    FROM notice
+    <if test="table eq 'on'">
+    WHERE noticeState = 1
+    </if>
+    <if test="table eq 'off'">
+    WHERE noticeState = 2
+    </if>
+    <if test="table eq 'plus'">
+    WHERE noticeState IN (1, 2)
+    </if>
+    <if test="searchWord != null and searchKey eq 'noticeTitle'">
+    WHERE noticeTitle LIKE '%'||#{searchWord}||'%'
+    </if>
+    <if test="searchWord != null and searchKey eq 'noticeContent'">
+    WHERE noticeContent LIKE '%'||#{searchWord}||'%'
+    </if>
+    <if test="searchWord != null and searchKey eq 'all'">
+    WHERE (noticeContent LIKE '%'||#{searchWord}||'%' OR noticeTitle LIKE '%'||#{searchWord}||'%')
+    </if>
+    ORDER BY noticeNum DESC
+  ) a
+) b
+
+</select>
+
+
+<select id="searchlist" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="NoticeDTO">
+
+  SELECT b.*        
+  FROM(
+    SELECT rownum as rm, a.*     
+    FROM(
+      SELECT *
+      FROM notice
+      <where>
+        <if test="table eq 'all' or table eq 'plus'">
+          noticeState IN (1, 2)
+        </if>
+        <if test="table eq 'on'">
+          noticeState = 1
+        </if>
+        <if test="table eq 'off'">
+          noticeState = 2
+        </if>
+        <if test="searchWord != null">
+          <if test="searchKey eq 'noticeTitle'">
+            AND noticeTitle LIKE '%'||#{searchWord}||'%'
+          </if>
+          <if test="searchKey eq 'noticeContent'">
+            AND noticeContent LIKE '%'||#{searchWord}||'%'
+          </if>
+        </if>
+      </where>
+      ORDER BY noticeNum DESC
+    )a
+  )b               
+  WHERE b.rm BETWEEN #{startRow} AND #{endRow}
+</select>-->
+
+
+<!-- 매퍼 고친거 -->
+
+<!--<select id="searchcount" parameterType="map" resultType="int">
+SELECT COUNT(*)
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "all"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+   <if test="searchWord != null">
+            <if test="searchKey eq 'noticeTitle'">
+             WHERE b.noticeTitle LIKE '%'||#{searchWord}||'%'
+             </if>                        
+             <if test="searchKey eq 'noticeContent'">
+             WHERE b.noticeContent LIKE '%'||#{searchWord}||'%'
+             </if>
+             <if test="table eq 'all'">
+             where b.noticeContent LIKE '%'||#{searchWord}||'%'
+             or b.noticeTitle LIKE '%'||#{searchWord}||'%'
+             </if>
+       </if>
+   )c
+    )d
+
+</select>
+
+
+<select id="searchlist" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="NoticeDTO">
+SELECT d.*
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "all"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+   <if test="searchWord != null">
+            <if test="searchKey eq 'noticeTitle'">
+             WHERE b.noticeTitle LIKE '%'||#{searchWord}||'%'
+             </if>                        
+             <if test="searchKey eq 'noticeContent'">
+             WHERE b.noticeContent LIKE '%'||#{searchWord}||'%'
+             </if>
+             <if test="table eq 'all'">
+             where b.noticeContent LIKE '%'||#{searchWord}||'%'
+             or b.noticeTitle LIKE '%'||#{searchWord}||'%'
+             </if>
+       </if>
+     )c
+    )d
+  WHERE d.rm BETWEEN #{startRow} AND #{endRow}   
+</select>-->
+
+
+
+<!-- 검색어 조건 설정-->
+<select id="searchcount" parameterType="map" resultType="int">
+SELECT COUNT(*)
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "plus"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+        <where>
+            <if test="searchWord != null">
+                <if test="searchKey eq 'noticeTitle'">
+                    AND b.noticeTitle LIKE '%'||#{searchWord}||'%'
+                </if>                        
+                <if test="searchKey eq 'noticeContent'">
+                    AND b.noticeContent LIKE '%'||#{searchWord}||'%'
+                </if>
+                <if test="searchKey eq 'all'">
+                    AND (b.noticeContent LIKE '%'||#{searchWord}||'%'
+                    OR b.noticeTitle LIKE '%'||#{searchWord}||'%')
+                </if>
+            </if>
+        </where>
+     )c
+    )d
+ 
+</select>
+
+
+<select id="searchlist" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="NoticeDTO">
+SELECT d.*
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "plus"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+        <where>
+            <if test="searchWord != null">
+                <if test="searchKey eq 'noticeTitle'">
+                    AND b.noticeTitle LIKE '%'||#{searchWord}||'%'
+                </if>                        
+                <if test="searchKey eq 'noticeContent'">
+                    AND b.noticeContent LIKE '%'||#{searchWord}||'%'
+                </if>
+                <if test="searchKey eq 'all'">
+                    AND (b.noticeContent LIKE '%'||#{searchWord}||'%'
+                    OR b.noticeTitle LIKE '%'||#{searchWord}||'%')
+                </if>
+            </if>
+        </where>
+     )c
+    )d
+  WHERE d.rm BETWEEN #{startRow} AND #{endRow}   
+</select>
+
+
+</mapper>

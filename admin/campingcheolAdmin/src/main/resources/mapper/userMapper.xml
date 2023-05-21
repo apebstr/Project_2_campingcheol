@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.admin.campingcheol.manage.dao.UserDAO">
+
+	<!-- 전체 총 회원 -->
+	<select id="count" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT rownum as rm, b.*    
+		    FROM(SELECT
+		     a.*  
+				FROM(SELECT *
+			     <if test="table eq 'userInfo'">
+		             FROM userInfo
+		          </if>
+		           <if test="table eq 'userDrop'">
+		             FROM userDrop
+		          </if>
+			        ORDER BY userKeynum desc
+		            )a
+		       <if test="searchWord != null">
+		         <if test="searchKey eq 'userID'">
+		            WHERE a.userID like '%'||#{searchWord}||'%'
+		         </if>
+		         <if test="searchKey eq 'userName'">
+		            WHERE a.userName LIKE '%'||#{searchWord}||'%'
+		         </if>
+		         <if test="searchKey eq 'userNick'">
+		            WHERE a.userNick LIKE '%'||#{searchWord}||'%'
+		         </if>
+		      </if>
+		      		AND a.userID IS NOT NULL
+		    )b
+		)c
+	</select>
+	
+	<!-- 전체 회원 조회 -->
+	<select id="listAllUser" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="UserDTO">
+		SELECT *
+			FROM(SELECT rownum as rm, b.*    
+			    FROM(SELECT a.*  
+					FROM(SELECT *
+				     <if test="table eq 'userInfo'">
+			             FROM userInfo
+			          </if>
+			           <if test="table eq 'userDrop'">
+			             FROM userDrop
+			          </if>
+				        ORDER BY userKeynum desc
+			            )a
+			       <if test="searchWord != null">
+					 <if test="searchKey eq 'all'">
+			         </if>
+			         <if test="searchKey eq 'userID'">
+			            WHERE a.userID like '%'||#{searchWord}||'%'
+			         </if>
+			         <if test="searchKey eq 'userName'">
+			            WHERE a.userName LIKE '%'||#{searchWord}||'%'
+			         </if>
+			         <if test="searchKey eq 'userNick'">
+			            WHERE a.userNick LIKE '%'||#{searchWord}||'%'
+			         </if>
+			      </if>
+			      		AND a.userID IS NOT NULL
+			    )b
+			)c
+	      WHERE c.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 전체 총 탈퇴회원 -->
+	<select id="countDrop" resultType="int">
+		SELECT count(*) FROM userDrop
+	</select>
+	
+	<!-- 전체 탈퇴회원 조회 -->
+	<select id="listAllDropUser" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="UserDropDTO">
+	<![CDATA[
+		SELECT b.*
+		FROM(SELECT rownum AS rm, a.*
+		     FROM userDrop a
+		     ORDER BY dropKeynum DESC)b
+		WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
+	]]>
+	</select>
+	
+
+	<!-- 회원탈퇴 -->
+	<insert id="insertDropUser" parameterType="String">
+		INSERT INTO userDrop (dropKeynum, userKeynum, userID, userPass, userName, userNick, userAddr, userPhone, userSex, userAge, userRegdate, userDropdate)
+		(select dropKeynum_seq.nextval, userKeynum, userID, userPass, userName, userNick, userAddr, userPhone, userSex, userAge, userRegdate, sysdate
+ 		 from userInfo
+ 		 where userKeynum = #{userKeynum})
+	</insert>
+	
+	<update id="UpdateDropUser" parameterType="String">
+		UPDATE userInfo
+		SET userID = '', userPass = '', userName = '', userNick = '', userAddr = '', userPhone = '', userSex = '', userAge = '', userRegdate = ''
+		WHERE userKeynum = #{userKeynum}
+	</update>
+	
+	
+</mapper>

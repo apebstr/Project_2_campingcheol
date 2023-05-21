@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.campingcheol.recommend.dao.CampRecommendDAO">
+
+
+	<!-- 유저가 마지막으로 결제한 CampKeyNum 가져오기-->
+	<select id="getCampKeyNum" parameterType="string" resultType="String">
+		SELECT a.campKeyNum
+		FROM (
+		SELECT campReservNum, campKeyNum, userKeyNum, campReservCheck,
+		ROW_NUMBER() OVER (ORDER BY campReservNum DESC) AS rn
+		FROM campReserv
+		WHERE userKeyNum = #{userKeyNum} AND campReservCheck = '결제완료'
+		)a
+		WHERE a.rn = 1
+	</select>
+
+
+	<!-- 큐레이팅결과 -> 캠핑정보 가져오기 -->
+	<select id="campInfo" parameterType="int"
+		resultType="com.campingcheol.campSite.dto.CampSiteDTO">
+		SELECT *
+		FROM campsite
+		WHERE campKeyNum = #{campKeyNum}
+	</select>
+
+
+	<!-- 비회원 / 정보가 없는 회원일 경우 평점이 높은 캠핑장 10곳 가져오기  -->
+
+	<select id="topCampSite" resultType="CampSiteDTO"> 
+		<![CDATA[
+		SELECT CS.* from campSite CS, (select a.* from (SELECT
+		campKeyNum, AVG(campReviewRating) AS avgRating FROM campReview GROUP BY
+		campKeyNum ORDER BY avgRating DESC) a WHERE ROWNUM <=10) CA
+		WHERE CS.campKeyNum = CA.campKeyNum
+	]]>
+	</select>
+
+
+	<!-- 캠핑장 상세 사진 가져오기
+	<select id = "campPic" resultType="String"
+	parameterType="int">
+		SELECT campPic
+		FROM campPic
+		WHERE campkeynum =
+	#{campkeynum}
+	</select>
+ -->
+
+
+<!-- 최신 캠핑용품 가져오기 10개 -->
+<select id="recentProdList" resultType="ProdDTO">
+		<![CDATA[
+select a.*, b.avgRating, b.reviewCount from
+(select * from prod ORDER BY prodregdate DESC) a,
+( SELECT count(*) AS reviewCount, prodKeyNum,ROUND(AVG(prodReviewRating),1) AS avgRating 
+   FROM prodReview
+   GROUP BY prodKeyNum)b
+WHERE 
+a.prodKeyNum = b.prodKeyNum(+)
+AND ROWNUM <=10
+]]>
+</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

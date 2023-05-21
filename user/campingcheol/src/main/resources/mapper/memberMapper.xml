@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.campingcheol.members.dao.MembersDAO">
+
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="MembersDTO">
+			INSERT INTO userInfo(userKeynum, userID, userPass, userName, userNick, userAddr, userPhone, userSex, userAge, userRegdate)
+			VALUES (userKeynum_seq.nextval, #{userID}, #{userPass}, #{userName}, #{userNick, jdbcType=VARCHAR}, #{userAddr, jdbcType=VARCHAR}, #{userPhone, jdbcType=VARCHAR}, #{userSex, jdbcType=VARCHAR}, #{userAge, jdbcType=VARCHAR}, sysdate)
+	</insert>
+	
+	<!-- 아이디 중복체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT count(userID) FROM userInfo
+		WHERE userID = #{userID}
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="nickCheck" parameterType="String" resultType="int">
+		SELECT count(*) FROM userInfo
+		WHERE userNick = #{userNick}
+	</select>
+
+	<!-- 마이페이지 정보확인 -->
+	<select id="selectByUserID" parameterType="String" resultType="MembersDTO">
+		SELECT * FROM userInfo
+		WHERE userID = #{userID}
+	</select>
+
+ 
+	<!-- 회원정보 수정 -->
+	<!-- 수정가능 정보 : 이름, 닉네임, 비밀번호, 핸드폰번호, 주소 -->
+	<update id="updateMember" parameterType="MembersDTO">
+		UPDATE userInfo
+		SET userName=#{userName}, userNick=#{userNick}, userPass=#{userPass}, userPhone=#{userPhone}, userAddr=#{userAddr}
+		WHERE userKeynum=#{userKeynum}
+	</update>
+	
+</mapper>

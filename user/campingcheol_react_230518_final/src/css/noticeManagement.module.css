@@ -1,0 +1,284 @@
+/* 전체영역 */
+.managmentCommon {
+  width: 1320px;
+  font-family: "SCDream1";
+  margin: auto;
+}
+
+/* 공지사항 텍슼트 */
+.commonTop p {
+  /* height: 150px; */
+  text-align: center;
+  font-size: 30pt;
+  margin-top: 100px;
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+
+/* "회원관리" 텍스트 */
+.topbar {
+  float: left;
+  background-color: rgb(0 110, 82);
+  padding: 30px 20px;
+  width: 1200px;
+  margin-top: 10px;
+  margin-left: 50px;
+  font-size: 20pt;
+  color: white;
+  font-weight: 7006;
+}
+
+/* 메뉴바와 실제 내용영역 */
+.commonUnder {
+  clear: both;
+}
+
+/* 실제 내용 */
+.managmentContent {
+  width: 1200px;
+  float: left;
+  margin: 0 auto;
+  margin-left: 50px;
+}
+
+.managmentContentUnder {
+  margin-top: 50px;
+}
+/* 관리자 공통부분 끝*/
+
+/* 회원을 검색하시오 테이블 */
+.membetText {
+  font-size: 17pt;
+  font-weight: 600;
+  margin-left: 30px;
+}
+.membersearch {
+  background-color: rgb(244, 241, 241);
+  padding: 20px 10px;
+}
+
+.membersearch table {
+  width: 100%;
+}
+
+.membersearch tr td:nth-of-type(1) {
+  padding: 20px;
+  width: 200px;
+}
+/* .membersearch td {
+  border: solid;
+} */
+
+/* 검색어 입력창 */
+.searchWord {
+  width: 250px;
+  height: 50px;
+  /* border-radius: 8pt; */
+
+  border: solid lightgray 1px;
+  border-right: none;
+}
+
+/* 검색어 입력창 */
+.searchChoose {
+  width: 100px;
+  height: 50px;
+  /* border-radius: 8pt; */
+  border: solid lightgray 1px;
+  /* border-right: none; */
+  margin: 0 30px;
+}
+
+/* 검색 버튼 */
+.searchWord + button {
+  height: 50px;
+  border: none;
+  transform: translateY(-4%);
+  border-radius: 0%;
+  background-color: rgb(0 110, 82);
+}
+
+/* 드롭 */
+.memberStatus,
+.searchCategory {
+  width: 200px;
+  height: 50px;
+}
+
+/* 검색결과 개수 */
+.memberSubText {
+  padding: 10px 5px;
+  margin-left: 170px;
+  margin-top: -70px;
+}
+
+/* 거 옆에있는 버튼  */
+.memberSubText + p {
+  float: right;
+  margin-right: 20px;
+}
+
+/* 멤버검색결과 */
+.memberList {
+  width: 100%;
+  clear: both;
+  margin-bottom: 150px;
+  /* clear: both; */
+}
+
+/* 표 관련 */
+.memberList table {
+  border-collapse: collapse;
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+
+  margin-bottom: 50px;
+
+  margin-top: 80px;
+}
+
+.memberList table th {
+  /* background-color: #0069d944; */
+
+  /* border: solid; */
+
+  border-bottom: solid #b7b5b5;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.memberList table td {
+  border-bottom: solid 1px lightgray;
+
+  text-align: center;
+  /* border: solid; */
+  padding: 20px 30px;
+}
+
+.memberList table td a {
+  text-decoration: none;
+  color: black;
+}
+
+/* 표 끝  */
+/* 캘린더 */
+.calendar {
+  width: 200px;
+  height: 50px;
+}
+
+.calendarRight {
+  width: 200px;
+  height: 50px;
+}
+
+.controllBtn button {
+  margin-left: 10px;
+}
+
+/* 공지사항 관리 공지사항*/
+.text-center {
+  text-align: center;
+  padding: 40px 40px;
+  font-size: 28px;
+  font-weight: 700;
+  width: 100%;
+  background-color: rgb(0 110, 82);
+  color: white;
+}
+
+.SubText {
+  width: 100%;
+  margin: auto;
+  font-size: 20pt;
+  font-weight: 700;
+  margin-top: 80px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead th {
+  text-align: right;
+}
+
+tbody td {
+  text-align: left;
+}
+
+.no-results {
+  text-align: center;
+}
+
+.boardPage {
+  /* border: solid; */
+  /* width: 250px; */
+
+  display: flex; /* 가로 방향으로 요소를 배치합니다. */
+  justify-content: center; /* 가운데 정렬합니다. */
+  width: auto;
+  margin: auto;
+}
+
+.boardSearch {
+  /* border: solid; */
+  height: 100px;
+  margin: 100px 0px;
+  /* clear: both; */
+  display: flex; /* 가로 방향으로 요소를 배치합니다. */
+  justify-content: center; /* 가운데 정렬합니다. */
+}
+
+.boardSearch > div {
+  /* float: right; */
+}
+
+/* 본문  */
+
+.noticeTitle_date {
+  margin-top: 100px;
+  border-bottom: solid rgb(162, 162, 162);
+  height: 65px;
+}
+.noticeTitle_date p {
+  display: inline-block;
+  /* border: solid; */
+}
+
+.noticeTitle_date p:nth-of-type(1) {
+  font-size: 23pt;
+  margin-left: 80px;
+  margin-top: 10px;
+}
+
+.noticeTitle_date p:nth-of-type(2) {
+  float: right;
+  color: gray;
+  /* border: solid; */
+  margin-top: 30px;
+  margin-left: 40px;
+}
+
+.noticeTitle_date p:nth-of-type(3) {
+  float: right;
+  /* border: solid; */
+  color: gray;
+  margin-top: 30px;
+}
+
+.noticePic {
+  display: block;
+  margin: 50px auto;
+}
+
+.noticeDetail {
+  text-align: center;
+  /* border: solid; */
+  width: 70%;
+  padding: 50px 10px;
+  margin: auto;
+  margin-bottom: 100px;
+}

@@ -1,0 +1,100 @@
+.Toptext {
+  padding: 40px 40px;
+  font-size: 28px;
+  font-weight: 700;
+}
+.noticeWritePage {
+  font-family: "SCDream1";
+  width: 1400px;
+  margin: auto;
+}
+.SubText {
+  width: 80%;
+  margin: auto;
+  font-size: 20pt;
+  font-weight: 700;
+  margin-top: 80px;
+}
+
+.Toptext {
+  width: 100%;
+  background-color: rgb(0 110, 82);
+  color: white;
+}
+.noticeForm {
+  width: 70%;
+  margin: auto;
+}
+
+.NoticeWriter {
+  margin-top: 20px;
+  padding: 15px 10px;
+}
+
+.NoticeWriter .title {
+  float: left;
+  width: 100px;
+  height: 50px;
+  background-color: rgb(0 110, 82);
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  font-size: 15pt;
+  border: rgb(0 110, 82) solid;
+}
+
+textarea {
+  height: 300px;
+  resize: none;
+}
+
+#noticeContent p {
+  height: 300px;
+  line-height: 300px;
+}
+textarea,
+.NoticeWriter input {
+  width: 80%;
+  border-left: none;
+}
+
+.NoticeWriter input {
+  height: 50px;
+}
+
+.formBtn {
+  width: 250px;
+  margin: auto;
+}
+
+.formBtn button {
+  width: 80px;
+  margin: 10px 20px;
+  padding: 8px 20px;
+}
+.files {
+  width: 88%;
+  margin-left: 10px;
+}
+
+.files p {
+  width: 100px;
+  height: 50px;
+
+  background-color: rgb(0 110, 82);
+  margin-bottom: 0;
+  color: white;
+  line-height: 50px;
+  text-align: center;
+}
+
+.formBtn {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+/* .saveBtn {
+  background-color: green;
+  border-color: green;
+} */

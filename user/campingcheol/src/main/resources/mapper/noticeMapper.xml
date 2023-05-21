@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.campingcheol.notice.dao.NoticeDAO">
+   <select id="count" resultType="int">
+      SELECT count(*) FROM notice
+      where noticeState = '1'
+   </select>
+
+
+
+<select id="list" parameterType="NoticePageDTO" resultType="NoticeDTO">
+    <![CDATA[
+        select b.*            
+        from(
+            select rownum as rm, a.*            
+            from(
+                select *
+                from notice 
+                where noticeState != '2' 
+                order by noticeNum desc
+            ) a
+        ) b
+        where b.rm>=#{startRow} AND b.rm<=#{endRow}
+    ]]>
+</select>
+
+
+<insert id="save" parameterType="NoticeDTO">
+INSERT INTO notice (noticeNum, adminId, noticeTitle, noticeContent, noticePic, noticeFile, noticeRegdate, noticeReadCount, noticeState)
+VALUES(noticeNum_seq.nextval, 'admin', #{noticeTitle}, #{noticeContent}, #{noticePic, jdbcType=VARCHAR}, #{noticeFile, jdbcType=VARCHAR}, sysdate, 0, '1')
+</insert>
+
+
+<update id="readCount" parameterType="int">
+   UPDATE notice
+   SET noticeReadCount = noticeReadCount + 1
+   WHERE noticeNum=#{noticeNum}
+</update>
+
+<select id="content" parameterType="int" resultType="NoticeDTO">
+   SELECT b.*
+   FROM notice b
+   WHERE noticeNum=#{noticeNum} 
+</select>
+
+<update id="update" parameterType="NoticeDTO">
+   UPDATE notice
+   SET noticeTitle=#{noticeTitle}, noticeContent=#{noticeContent}
+   WHERE noticeNum=#{noticeNum}
+</update>
+
+
+
+<delete id="delete" parameterType="int">
+DELETE FROM notice
+WHERE noticeNum=#{noticeNum}
+</delete>
+
+
+
+<!-- 검색어 조건 설정-->
+<select id="searchcount" parameterType="map" resultType="int">
+SELECT COUNT(*)
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "plus"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+        <where>
+            <if test="searchWord != null">
+                <if test="searchKey eq 'noticeTitle'">
+                    AND b.noticeTitle LIKE '%'||#{searchWord}||'%'
+                </if>                        
+                <if test="searchKey eq 'noticeContent'">
+                    AND b.noticeContent LIKE '%'||#{searchWord}||'%'
+                </if>
+                <if test="searchKey eq 'all'">
+                    AND (b.noticeContent LIKE '%'||#{searchWord}||'%'
+                    OR b.noticeTitle LIKE '%'||#{searchWord}||'%')
+                </if>
+            </if>
+        </where>
+     )c
+    )d
+ 
+</select>
+
+
+<select id="searchlist" parameterType="com.campingcheol.notice.dto.NoticePageDTO" resultType="NoticeDTO">
+SELECT d.*
+   FROM(SELECT rownum as rm, c.*
+   FROM(SELECT b.* 
+      FROM(SELECT a.* 
+      FROM(SELECT *
+         FROM notice
+         ORDER BY noticeNum DESC
+         )a
+         <if test='table eq "plus"'>
+         </if>
+   
+         <if test='table eq "on"'>
+          where a.noticeState = '1'
+         </if>
+
+         <if test='table eq "off"'>
+          where a.noticeState = '2'
+         </if>
+         )b
+        <where>
+            <if test="searchWord != null">
+                <if test="searchKey eq 'noticeTitle'">
+                    AND b.noticeTitle LIKE '%'||#{searchWord}||'%'
+                </if>                        
+                <if test="searchKey eq 'noticeContent'">
+                    AND b.noticeContent LIKE '%'||#{searchWord}||'%'
+                </if>
+                <if test="searchKey eq 'all'">
+                    AND (b.noticeContent LIKE '%'||#{searchWord}||'%'
+                    OR b.noticeTitle LIKE '%'||#{searchWord}||'%')
+                </if>
+            </if>
+        </where>
+     )c
+    )d
+  WHERE d.rm BETWEEN #{startRow} AND #{endRow}   
+</select>
+
+
+</mapper>

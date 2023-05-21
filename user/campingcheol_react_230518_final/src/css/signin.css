@@ -1,0 +1,115 @@
+.loginPage {
+  /* position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 500px;
+
+
+  left: 50%;
+  transform: translate(-50%, 0); */
+
+  background-color: #f7f7f7;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  /* overflow: hidden; */
+
+  width: 800px;
+  margin: 0 auto;
+}
+
+.titleWrap {
+  margin-left: 50px;
+  margin-top: 50px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #262626;
+}
+
+.contentWrap {
+  margin-top: 26px;
+  flex: 1;
+}
+
+.inputTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.withWrap {
+  display: flex;
+  width : 
+}
+
+.inputWrap {
+  width: 650px;
+  display: flex;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+
+.inputform {
+  margin-left: 50px;
+}
+
+.inputWrap:focus-within {
+  border: 1px solid rgb(250, 212, 0);
+}
+
+.input {
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 17px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.input::placeholder {
+  color: gray;
+}
+
+.errorMessageWrap {
+  margin-top: 8px;
+  color: rgb(207, 27, 27);
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.bottomButton {
+  width: 100%;
+  height: 48px;
+  border: none;
+  font-weight: 700;
+  background-color: #0f8d39ec;
+  border-radius: 64px;
+  color: white;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.bottomButton:disabled {
+  background-color: #dadada;
+  color: white;
+}
+
+.radio div {
+  /* border: solid; */
+  width: 20%;
+  padding-left: 5px;
+}
+
+.label {
+  margin-left: 5px;
+  font-size: 14px;
+}

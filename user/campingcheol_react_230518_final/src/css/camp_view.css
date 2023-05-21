@@ -1,0 +1,288 @@
+.camp-view-container {
+  width: 1350px;
+  margin: 140px auto;
+  /* border: solid; */
+}
+.camp_calendar {
+  padding: 20px;
+}
+
+.camp-detail {
+  /* display: flex; */
+}
+
+.camp-content {
+  /* border: solid; */
+  float: left;
+
+  margin: 30px;
+  /* margin-left: 100px; */
+}
+.camp-img {
+  /* margin-right: 10px; */
+  margin: 40px;
+  width: 680px;
+  /* border: solid; */
+  float: left;
+}
+.camp-img img {
+  width: 650px;
+  height: 420px;
+  display: block;
+  margin: auto;
+}
+
+.camp-infomation {
+  /* margin-top: 130px; */
+  /* border: solid; */
+  clear: both;
+}
+.row {
+  float: left;
+  /* margin-top: 40px; */
+}
+.campEnvTable th {
+  text-align: center;
+  width: 160px;
+  border-bottom: 1px solid;
+  border-right: 1px solid lightgray;
+  /* background-color: beige; */
+  /* border-radius: 50pt; */
+}
+.campEnvTable a {
+  text-decoration: none;
+  color: black;
+}
+
+.row td {
+  border-bottom: 1px solid;
+  padding: 10px;
+  width: 340px;
+}
+
+.campview_rating {
+  /* margin-left: 20px; */
+  margin-top: 30px;
+}
+.camp-intro {
+  width: 90%;
+  margin: auto;
+  height: 200px;
+  border: 1px solid lightgray;
+  margin-bottom: 100px;
+}
+.camp-intro p {
+  margin: 20px;
+  line-height: 20pt;
+}
+.camp-tags span {
+  margin-right: 10px;
+}
+
+.camp-title {
+  font-size: 20pt;
+  /* margin-top: 400px; */
+}
+.camp_calendar {
+  margin: 40px 40px;
+}
+#home {
+  margin: 20px 20px;
+}
+.camp-room-list {
+  /* border: solid; */
+  clear: both;
+  /* margin-top: 50px; */
+}
+.camp-room-list li {
+  margin: 20px;
+}
+
+.camp_address {
+  /* padding-top: 30px;
+  display: inline-block; */
+}
+
+.camp-tags {
+  padding-top: 30px;
+}
+
+.campViewIntro {
+  clear: both;
+  text-align: center;
+  font-style: italic;
+  font-size: 15pt;
+  color: gray;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+.react-datepicker__input-container input {
+  width: 200px;
+}
+
+.roomPrice_btn {
+  /* border: solid; */
+  width: 540px;
+
+  margin-top: 40px;
+}
+.camp_last {
+  padding: 20px 0;
+  color: gray;
+}
+.camp_room_price {
+  float: right;
+  padding: 10px;
+  font-size: 15pt;
+}
+#campRervBtn {
+  width: 530px;
+  padding: 15px 20px;
+  color: white;
+  background-color: rgb(0 110, 82);
+  border: none;
+  /* font-weight: 800; */
+  font-size: 15pt;
+  /* margin-left: 100px; */
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+.camp-map {
+  font-size: 20pt;
+  margin-top: 100px;
+}
+
+.mapAddr {
+  font-size: 15pt;
+  margin-left: 100px;
+  margin-top: 40px;
+}
+
+.prodRating {
+  margin-top: 50px;
+}
+
+.prodRatingTop {
+  font-size: 17pt;
+  font-weight: 600;
+}
+
+.writeReview {
+  height: 200px;
+}
+
+.form-control {
+  width: 600px;
+}
+
+.writeInput {
+  width: 600px;
+}
+.reviewLeft p:nth-of-type(1) {
+  margin-top: 20px;
+}
+
+.prodReview {
+  margin-top: 50px;
+  background-color: rgb(243, 243, 243);
+  border-bottom: solid gray 1px;
+}
+
+.reviewLeft {
+  display: inline-block;
+  float: left;
+  width: 78%;
+  border: solid 0.3px rgb(187, 184, 184);
+}
+
+.reviewLeft p {
+  margin-left: 20px;
+}
+
+.reviewRight {
+  display: inline-block;
+  float: right;
+  width: 15%;
+  height: 50%;
+  margin: 40px 10px;
+  margin-right: 25px;
+}
+
+.reviewRight button {
+  width: 100%;
+  height: 100%;
+  border: solid rgb(197, 192, 192) 1px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 5%;
+  font-weight: 600;
+}
+
+.prodReview p {
+  margin-left: 20px;
+}
+
+.reviewProdName {
+  font-size: 14pt;
+  padding-top: 10px;
+
+  font-weight: 600;
+}
+
+.prodReview p:nth-of-type(4) {
+  margin-left: 85%;
+  padding: 10px;
+}
+
+.camp_jjim img {
+  height: 50px;
+}
+
+.camp_tt {
+  font-size: 25pt;
+}
+
+/* .camp_jjim {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+} */
+
+.camp_last.campRoomCount {
+  font-weight: bold;
+}
+
+.camp_jjim {
+  /* border: solid; */
+  /* width: 55px; */
+  position: absolute;
+  margin-left: 430px;
+  margin-top: -105px;
+}
+
+/* 날짜아아 */
+.datePic {
+  /* border: solid; */
+}
+
+.datePicker {
+  margin-top: 20px;
+  border: solid 1px lightgray;
+  cursor: pointer;
+}
+
+.selectDate {
+  padding: 20px 20px;
+  margin: 30px 10px;
+  float: left;
+  /* border: solid; */
+  box-shadow: 0 1px 8px rgba(110, 110, 110, 0.12);
+}
+
+#campRervBtn {
+  margin-top: 50px;
+}

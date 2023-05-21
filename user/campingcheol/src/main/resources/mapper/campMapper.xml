@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.campingcheol.my.dao.CampcartDAO">
+	
+	
+<!--캠핑장 찜목록 페이징을 위한 카운드 세기-->
+<select id="campLikeCount" parameterType="String" resultType="int">
+   select count(*) from campLikeLoc
+   WHERE userID=#{userID}
+</select> 
+ 
+ 
+<!--회원에 맞는 캠핑장 찜목록 가져오기-->
+<select id="list" parameterType="CampMyPageDTO" resultType="com.campingcheol.campSite.dto.CampSiteDTO">
+    <![CDATA[
+   SELECT  a.rm, a.* 
+   FROM ( select rownum as rm, l.*, c.campImg, c.campName, c.campAddr
+           from campLikeLoc l, campsite c
+         WHERE l.campKeyNum = c.campKeyNum
+                  AND  userID=#{userID}) a
+   WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+   ORDER BY a.campLikeLoc DESC
+]]>
+</select>
+
+   
+   <!-- 캠핑장 찜목록 삭제 -->
+	<delete id="deleteCart" parameterType="int">
+		DELETE FROM campLikeLoc
+        WHERE campKeyNum = #{campKeyNum}
+	</delete>
+	
+ 
+<!--////////////////////////////////////////////////////////////-->
+
+
+<!--캠핑장 이용내역 페이징을 위한 카운드 세기-->
+<select id="countByCamp" parameterType="int" resultType="int">
+   select count(*)
+   FROM(SELECT rownum as rm, a.*
+			 FROM(SELECT t2.campReservNum, t4.campImg,t4.campName,t2.campRoom, t2.campRoomCount,t2.campReservStart, t2.campReservEnd, t3.campPayAmt, t2.campReservCheck, t2.userkeynum,t2.campReservDate
+			    FROM userinfo t1
+			    INNER JOIN campReserv t2 ON t1.userkeynum = t2.userkeynum
+			    INNER JOIN campPay t3 ON t2.campReservNum = t3.campReservNum
+			    INNER JOIN campsite t4 ON t3.campKeyNum = t4.campKeyNum
+			    ORDER BY campReservNum DESC)a
+			WHERE a.userkeynum = #{userKeyNum})b
+</select> 
+ 
+ 
+
+<!--캠핑장 이용내역 가져오기-->
+	<select id="selectByCamp" parameterType="CampMyPageDTO" resultType="CampRoomDTO">
+		 <![CDATA[
+		SELECT b.*
+		FROM(SELECT rownum as rm, a.*
+			 FROM(SELECT t4.campKeyNum,t3.campPayKeyNum, t2.campReservNum,t4.campImg,t4.campName,t2.campRoom, t2.campRoomCount,t2.campReservStart, t2.campReservEnd, t3.campPayAmt, t2.campReservCheck, t2.userkeynum,t2.campReservDate, t3.campReviewCheck
+
+			    FROM userinfo t1
+			    INNER JOIN campReserv t2 ON t1.userkeynum = t2.userkeynum
+			    INNER JOIN campPay t3 ON t2.campReservNum = t3.campReservNum
+			    INNER JOIN campsite t4 ON t3.campKeyNum = t4.campKeyNum
+			    ORDER BY campReservNum DESC)a
+			WHERE a.userkeynum = #{userKeyNum})b
+		WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
+]]>
+	</select>
+
+
+
+<!--캠핑용품 결제내역 페이징을 위한 카운드 세기-->
+<select id="prodOrderCount" parameterType="String" resultType="int">
+   select count(*) 
+	FROM(SELECT rownum as rm, a.*
+			FROM(select p.userKeynum, p.prodKeyNum,p.prodOrderNum, p.prodDetailNum, p.prodDate, pd.prodImage, pd.prodTitle, p.prodCartCount, p.prodpayAmt, p.prodOrderCheck, p.whetherReview
+			    from prodOrderDetail p, prod pd
+			    WHERE p.prodKeyNum = pd.prodKeyNum
+			    ORDER BY  p.prodOrderNum DESC, p.prodDetailNum DESC)a
+			WHERE a.userKeynum=#{userKeyNum})b
+</select>
+
+
+<!--캠핑용품 결제내역 가져오기 + 페이징 -->
+    <select id="selectByProd" parameterType="MyPageDTO" resultType="ProdOrderDetailDTO">
+<![CDATA[
+		SELECT b.*
+		FROM(SELECT rownum as rm, a.*
+			FROM(select p.userKeynum, p.prodKeyNum,p.prodOrderNum, p.prodDetailNum, p.prodDate, pd.prodImage, pd.prodTitle, p.prodCartCount, p.prodpayAmt, p.prodOrderCheck, p.whetherReview
+			    from prodOrderDetail p, prod pd
+			    WHERE p.prodKeyNum = pd.prodKeyNum
+			    ORDER BY  p.prodOrderNum DESC, p.prodDetailNum DESC)a
+			WHERE a.userKeynum=#{userKeynum})b
+	 WHERE b.rm>=#{startRow} AND b.rm<=#{endRow}
+]]>
+</select>
+	
+</mapper>

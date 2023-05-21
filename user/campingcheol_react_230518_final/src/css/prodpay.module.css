@@ -1,0 +1,102 @@
+.prodPay {
+  font-family: "SCDream1";
+}
+
+.prodPay > p {
+  font-size: 25pt;
+  text-align: center;
+  margin: 60px auto;
+}
+
+.middelText {
+  font-size: 15pt;
+  font-weight: 600;
+}
+
+.payList {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.payListTable {
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+  width: 850px;
+}
+
+.payListTable th {
+  border-top: 1px solid black;
+  background-color: rgb(239 239 239);
+  padding: 15px;
+}
+.payListTable td {
+  border-top: 1px solid gray;
+  padding: 18px;
+}
+
+.prodPayTotal td:nth-of-type(1) {
+  color: gray;
+  border-bottom: 1px solid gray;
+}
+.prodPayTotal td:nth-of-type(2) {
+  font-size: 15pt;
+  font-weight: 600;
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.deliveryInfo {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+.deliveryInfo input {
+  height: 40px;
+}
+
+.deliveryInfo td,
+.deliveryInfo th {
+  border-bottom: 1px solid gray;
+}
+
+.deliveryInfoTable {
+  margin: 0 auto;
+  width: 800px;
+  border-collapse: collapse;
+  border-top: 1px solid gray;
+}
+
+.deliveryInfoTable td {
+  padding: 20px;
+}
+
+.long_deliveryInput {
+  width: 590px;
+}
+
+.short_deliveryInput {
+  width: 200px;
+}
+
+.payInfo {
+  width: 1000px;
+  margin: 70px auto;
+}
+
+#prodPayBtn {
+  padding: 10px 20px;
+  margin-left: 30px;
+}
+
+.payMethod {
+  /* border: solid; */
+  width: 1000px;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.payMethod img {
+  width: 150px;
+  height: 80px;
+}

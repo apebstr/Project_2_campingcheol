@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.campingcheol.my.dao.MymyDAO">
+
+
+ <!-- 회원정보 가져오기 -->
+	<select id="selectBynum" parameterType="string" resultType="MembersDTO">
+SELECT * from userInfo
+    WHERE userKeynum =#{userKeynum}
+    </select>
+	
+	
+	<!-- 회원정보 수정 -->
+	<!-- 수정가능 정보 : 닉네임, 비밀번호, 주소 -->
+	<update id="updateUser" parameterType="MembersDTO">
+		UPDATE userInfo
+		SET userNick=#{userNick}, userPass=#{userPass}, userAddr=#{userAddr}
+		WHERE userKeynum=#{userKeynum}
+	</update>
+	
+	<!--비밀번호 변경 -->
+	  <update id="updateByPass" parameterType="MembersDTO">
+		UPDATE userInfo SET userPass=#{userPass}
+		WHERE userkeynum = #{userkeynum}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<insert id="insertDropUser" parameterType="String">
+		INSERT INTO userDrop (dropKeynum, userKeynum, userID, userPass, userName, userNick, userAddr, userPhone, userSex, userAge, userRegdate, userDropdate)
+		(select dropKeynum_seq.nextval, userKeynum, userID, userPass, userName, userNick, userAddr, userPhone, userSex, userAge, userRegdate, sysdate
+ 		 from userInfo
+ 		 where userKeynum = #{userKeynum})
+	</insert>
+	
+	
+	<update id="UpdateDropUser" parameterType="String">
+		UPDATE userInfo
+		SET userID = '', userPass = '', userName = '', userNick = '', userAddr = '', userPhone = '', userSex = '', userAge = '', userRegdate = ''
+		WHERE userKeynum = #{userKeynum}
+	</update>
+	
+	
+	
+  <!--/////////////////////////////////////////////////////////////////-->
+<!--캠핑장 후기 페이징을 위한 카운드 세기(userKeynum)-->
+   <select id="countCreview" parameterType="int" resultType="int">
+      select count(*) from campReview
+      WHERE userKeyNum=#{userKeyNum}
+    </select> 
+ 
+   
+   
+   <!--캠핑장 후기 가져오기(userKeynum)-->
+   <select id="selectCreview" parameterType="CampMyPageDTO" resultType="com.campingcheol.campSite.dto.CampReviewDTO">
+        <![CDATA[
+   SELECT  a.rm, a.* 
+   FROM ( select rownum as rm, w.userKeyNum, w.campRewNum, c.campKeyNum, c.campName, c.campImg, w.campReviewContent, w.campReviewRating, w.campReviewDate
+          FROM campReview w, campSite c
+         WHERE w.campKeyNum = c.campKeyNum
+         AND w.userKeyNum =#{userKeyNum}) a
+   WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+   ORDER BY a.campRewNum DESC
+     ]]>
+   </select>
+   
+   
+   <!--캠핑장 후기 가져오기(campRewNum)-->
+   <select id="selectCKN" parameterType="int" resultType="CampReviewDTO">
+      SELECT w.userKeyNum, w.campRewNum, c.campKeyNum, c.campName, c.campImg, w.campReviewContent, w.campReviewRating, w.campReviewDate
+       FROM campReview w, campSite c
+       WHERE w.campKeyNum = c.campKeyNum
+       AND w.campRewNum = #{campRewNum}
+   </select>
+   
+   
+   
+      <!--캠핑용품 후기 페이징을 위한 카운드 세기(userKeynum)-->
+      <select id="countPreview" parameterType="int" resultType="int">
+         select count(*) from prodReview
+         WHERE userKeynum=#{userKeynum}
+       </select> 
+   
+   <!--캠핑용품 후기 가져오기(userKeynum)-->
+       <select id="selectPreview" parameterType="MyPageDTO" resultType="com.campingcheol.prod.dto.ProdReviewDTO">
+         <![CDATA[
+            SELECT  a.rm, a.* 
+            FROM ( select rownum as rm, r.prodReviewNum, r.userKeynum, p.prodKeyNum, p.prodTitle, p.prodImage, r.prodReviewContent, r.prodReviewRating, r.prodReviewDate
+                   FROM prodReview r, prod p
+                    WHERE r.prodKeyNum = p.prodKeyNum
+                   AND r.userKeynum =#{userKeyNum}) a
+            WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+            ORDER BY a.prodReviewNum DESC
+             ]]>
+       </select>
+   
+	<!--캠핑용품 후기 가져오기(prodReviewNum)-->
+	<select id="selectPRN" parameterType="int" resultType="com.campingcheol.prod.dto.ProdReviewDTO">
+		SELECT r.prodReviewNum, r.userKeynum, p.prodKeyNum, p.prodTitle, p.prodImage, r.prodReviewContent, r.prodReviewRating, r.prodReviewDate
+		FROM prodReview r, prod p
+		WHERE r.prodKeyNum = p.prodKeyNum
+		AND r.prodReviewNum = #{prodReviewNum}
+	</select>
+	
+	<!--캠핑장 후기 삭제하기-->
+	<delete id="deleteCreview" parameterType="int">
+		DELETE FROM campReview
+		WHERE campRewNum = #{campRewNum}
+	</delete>
+	
+	
+	<!--캠핑용품 후기 삭제하기-->
+	<delete id="deletePreview" parameterType="int">
+		DELETE FROM prodReview
+		WHERE prodReviewNum = #{prodReviewNum}
+	</delete>
+	
+	
+	
+	<!--캠핑장 후기 작성하기-->
+	<insert id="saveCampReview" parameterType="CampReviewDTO">
+		INSERT INTO campReview(campRewNum, campKeyNum, userKeynum, campReviewContent, campReviewRating, campReviewDate)
+		VALUES(campRewNum_seq.nextval, #{campKeyNum}, #{userKeynum}, #{campReviewContent, jdbcType=VARCHAR}, #{campReviewRating}, sysdate)
+	</insert>
+	
+	
+	
+	<!--캠핑장 후기작성 여부 변경하기-->
+	<update id="campReviewTrue" parameterType="int">
+		UPDATE campPay
+		SET campReviewCheck ='true'
+		WHERE campPayKeyNum =#{campPayKeyNum}
+	</update>
+	
+	
+	
+	<!--캠핑장 후기 수정하기-->
+	<update id="updateCampReview" parameterType="CampReviewDTO">
+     UPDATE campReview
+     SET campReviewContent=#{campReviewContent, jdbcType=VARCHAR}, campReviewRating=#{campReviewRating}
+     WHERE campRewNum = #{campRewNum}
+    </update>
+
+
+
+    <!--캠핑용품 후기 수정하기-->
+	<update id="updateProdReview" parameterType="com.campingcheol.prod.dto.ProdReviewDTO">
+     UPDATE prodReview
+     SET prodReviewContent=#{prodReviewContent, jdbcType=VARCHAR}, prodReviewRating=#{prodReviewRating}
+     WHERE prodReviewNum = #{prodReviewNum}
+    </update>
+
+
+	
+</mapper>

@@ -1,0 +1,98 @@
+.adminContainer {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 1600px;
+  height: auto;
+  display: flex;
+  font-family: "SCDream1";
+}
+
+.leftSide {
+  /* border: 1px solid red; */
+  width: 280px;
+}
+.rightSide {
+  /* border: 1px solid blue; */
+  width: 1320px;
+  /* background-color: rgb(255, 236, 173); */
+}
+
+/* 관리자프로필*/
+.profileContainer {
+  /* border: 1px solid black; */
+  width: 250px;
+  height: 190px;
+  margin: 0 auto;
+  text-align: center;
+}
+.profileContainer div {
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+}
+
+.profileContainer img {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 120px;
+  height: 120px;
+  border-radius: 10%;
+}
+
+.managerName {
+  text-align: center;
+  font-size: 13pt;
+  margin-right: 5px;
+}
+
+.profileContainer p:nth-child(1) {
+  font-size: 15pt;
+  color: black;
+}
+
+/* 메뉴바 */
+.menubarContainer {
+  /* border: 1px solid black; */
+  width: 250px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+/* 관리자 메뉴 */
+.menubar {
+  background-color: rgb(0 110, 82);
+  /* float: left; */
+  /* margin: 60px auto; */
+  width: 250px;
+  /* height: 600px; */
+}
+
+/* 메뉴바 테이블 */
+.menubar table {
+  width: 100%;
+  margin-top: 13px;
+}
+
+.menubar table th {
+  width: 100%;
+  font-size: 15pt;
+  color: white;
+}
+
+.category {
+  background-color: rgb(0 90, 82);
+  padding: 30px 0px;
+  text-align: center;
+}
+
+.prod {
+  padding: 30px 0px;
+  text-align: center;
+}
+
+.prod {
+  background-color: rgb(0 100, 82);
+}
+
+.menubar th {
+  cursor: pointer;
+}

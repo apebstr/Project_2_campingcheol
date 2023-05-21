@@ -1,0 +1,173 @@
+.prodList {
+  font-family: "SCDream1";
+}
+
+.proBanner {
+  margin: auto;
+  width: 1300px;
+  height: 700px;
+  margin-top: 100px;
+}
+
+.proBanner img {
+  width: 1300px;
+  height: 700px;
+}
+
+.search {
+  margin: 30px;
+  margin-top: 50px;
+}
+
+.searchArea {
+  margin: 0 auto;
+  width: 600px;
+}
+
+#button-addon2 {
+  background-color: rgb(193, 228, 188);
+  border: gray;
+  color: black;
+}
+.category {
+  margin: auto;
+  width: 900px;
+}
+
+.category th {
+  width: 300px;
+  height: 70px;
+}
+.category button {
+  width: 98%;
+  height: 95%;
+  padding-bottom: 15px;
+  padding-top: 5px;
+  font-weight: 600;
+  border: lightgray solid 1.8px;
+  border-radius: 5pt;
+}
+
+.category a {
+  text-decoration: none;
+  color: black;
+}
+
+.products {
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+  transform: translateX(2%);
+}
+
+.product {
+  display: inline-block;
+  text-align: center;
+  width: 32.2%;
+  height: 30%;
+  border: solid 0.1px rgb(220, 213, 213);
+  margin-top: 20px;
+  margin: 1px;
+}
+
+.product img {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 20px auto;
+}
+.productExpain {
+  margin: 30px;
+}
+
+.product .prodName {
+  margin: 0;
+  height: 100px;
+}
+.product .prodName a {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 5px;
+}
+
+.proPrice {
+  color: rgb(97, 85, 85);
+  font-weight: 600;
+}
+
+.prodcart select {
+  width: 70px;
+  display: inline-block;
+  margin: 10px;
+  transform: translateY(7%);
+}
+
+.paging {
+  width: 500px;
+  height: 100px;
+  margin: 50px auto;
+  /* border: solid; */
+
+  display: flex;
+  justify-content: center;
+}
+
+.pagingNav {
+  margin: 27px;
+}
+
+.pagingNav li {
+  margin: 2px;
+}
+
+.category img {
+  width: 64px;
+  height: 64px;
+}
+
+/* 카테고리 전용 */
+
+.categoryListCount {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20pt;
+  font-weight: 600;
+}
+
+/* 검색전용 */
+.searchArea button {
+  text-decoration: none;
+  background-color: rgb(0 110, 82);
+  color: white;
+  border-radius: 0pt;
+  /* border: 5px rgb(0 110, 82); */
+}
+
+.searchArea button:hover {
+  text-decoration: none;
+  background-color: rgb(0 110, 82);
+  color: white;
+  border-radius: 0pt;
+}
+
+.cartAlert {
+  background-color: rgba(240, 240, 240, 0);
+}
+
+/* 재고 */
+.stocknone {
+  position: absolute;
+  width: 32.1%;
+  height: 480px;
+  /* border: solid; */
+  z-index: 50;
+  background-color: rgba(128, 128, 128, 0.671);
+}
+
+.stocknone p {
+  color: aliceblue;
+  margin-top: 200px;
+  font-size: 30pt;
+}

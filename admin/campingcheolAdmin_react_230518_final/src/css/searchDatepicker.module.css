@@ -1,0 +1,9 @@
+/* 캘린더 */
+.datepicker_container {
+  display: flex;
+}
+
+.calendar {
+  width: 200px;
+  height: 50px;
+}

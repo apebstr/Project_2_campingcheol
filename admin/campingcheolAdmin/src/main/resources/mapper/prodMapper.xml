@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.admin.campingcheol.manage.dao.ProdDAO">
+	
+<!-- 캠핑용품 조회+검색(count) -->
+	<select id="searchProdCount" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT rownum as rm, d.*
+		    FROM(SELECT c.*
+		        FROM(SELECT b.*
+		            FROM(SELECT a.*
+		                FROM(SELECT t1.*        
+                            FROM(SELECT *
+                                FROM prod
+                                ORDER BY prodKeyNum DESC)t1
+                            <if test='startDate != "a" and endDate != "a"'>
+                            WHERE t1.prodRegdate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+		                    </if>  
+		                    )a
+		                    <if test='state eq "all"'>
+		                    </if>
+		                    <if test='state eq "on"'>
+		                    WHERE a.prodState = '0'
+		                    </if>
+		                    <if test='state eq "off"'>
+		                    WHERE a.prodState = '1'
+		                    </if>
+		                )b
+		            <if test='category eq "all"'>
+		            </if>
+		            <if test='category eq "a"'>
+					WHERE b.prodCategory = '텐트' 
+		            </if>
+		            <if test='category eq "b"'>
+					WHERE b.prodCategory = '캠핑가구' 
+		            </if>
+		            <if test='category eq "c"'>
+					WHERE b.prodCategory = '랜턴' 
+		            </if>
+		            <if test='category eq "d"'>
+					WHERE b.prodCategory = '캠핑매트' 
+		            </if>			            
+		            <if test='category eq "e"'>
+					WHERE b.prodCategory = '취사용품' 
+		            </if>		
+		            <if test='category eq "f"'>
+					WHERE b.prodCategory = '기타캠핑용품' 
+		            </if>	            		            
+		            )c
+		 		<if test="searchWord != null">
+		         <if test="searchKey eq 'prodKeyNum'">
+		            WHERE c.prodKeyNum = #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'prodTitle'">
+		            WHERE c.prodTitle LIKE '%'||#{searchWord}||'%'
+		         </if>
+		    </if>           
+		    )d
+		)e
+	</select>
+
+	<!-- 캠핑용품 조회+검색 리스트 -->	
+	<select id="searchProdList" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="ProdDTO">
+		SELECT e.*
+		FROM(SELECT rownum as rm, d.*
+		    FROM(SELECT c.*
+		        FROM(SELECT b.*
+		            FROM(SELECT a.*
+		                FROM(SELECT t1.*        
+                            FROM(SELECT *
+                                FROM prod
+                                ORDER BY prodKeyNum DESC)t1
+                            <if test='startDate != "a" and endDate != "a"'>
+                            WHERE t1.prodRegdate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+		                    </if>  
+		                    )a
+		                    <if test='state eq "all"'>
+		                    </if>
+		                    <if test='state eq "on"'>
+		                    WHERE a.prodState = '0'
+		                    </if>
+		                    <if test='state eq "off"'>
+		                    WHERE a.prodState = '1'
+		                    </if>
+		                )b
+		            <if test='category eq "all"'>
+		            </if>
+		            <if test='category eq "a"'>
+					WHERE b.prodCategory = '텐트' 
+		            </if>
+		            <if test='category eq "b"'>
+					WHERE b.prodCategory = '캠핑가구' 
+		            </if>
+		            <if test='category eq "c"'>
+					WHERE b.prodCategory = '랜턴' 
+		            </if>
+		            <if test='category eq "d"'>
+					WHERE b.prodCategory = '캠핑매트' 
+		            </if>			            
+		            <if test='category eq "e"'>
+					WHERE b.prodCategory = '취사용품' 
+		            </if>		
+		            <if test='category eq "f"'>
+					WHERE b.prodCategory = '기타캠핑용품' 
+		            </if>	            		            
+		            )c
+		 	<if test="searchWord != null">
+		         <if test="searchKey eq 'prodKeyNum'">
+		            WHERE c.prodKeyNum = #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'prodTitle'">
+		            WHERE c.prodTitle LIKE '%'||#{searchWord}||'%'
+		         </if>
+		    </if>           
+		    )d
+		)e
+      WHERE e.rm BETWEEN #{startRow} AND #{endRow}
+	</select>	
+	
+	
+	<!-- 캠핑용품 상세-->
+	<select id="detailProd" parameterType="String" resultType="ProdDTO">
+		SELECT *
+		FROM prod
+		WHERE prodKeyNum = #{prodKeyNum}
+	</select>
+	
+	<!-- 캠핑용품 수정1-->
+	<select id="getImg" parameterType="string" resultType="string">
+		SELECT prodImage
+		FROM prod
+		WHERE prodKeyNum=#{prodKeyNum}
+	</select>
+	
+	<!-- 캠핑용품 수정2-->
+	 <update id= "updateProd" parameterType="ProdDTO">
+		UPDATE prod
+		SET prodTitle=#{prodTitle}, prodPrice=#{prodPrice}, prodCategory=#{prodCategory}, prodStock=#{prodStock}, prodState=#{prodState} 
+		<if test="prodImage!=null">
+			,prodImage=#{prodImage}
+		</if>
+		WHERE prodKeyNum=#{prodKeyNum}
+	</update>
+
+	<!-- 캠핑용품 추가 (seq새로 생성해야함)-->
+	<insert id = "insertProd" parameterType="ProdDTO">
+       INSERT INTO prod(prodKeyNum, prodTitle, prodImage, prodPrice, prodCategory, prodStock, prodBrand, prodState, prodReadCount, prodRegdate)
+       VALUES(prodKeyNum_seq.nextval, #{prodTitle}, #{prodImage},#{prodPrice},#{prodCategory},#{prodStock},#{prodBrand},#{prodState},0,sysdate)
+    </insert>
+
+	<!-- 캠핑용품 삭제 -->
+	<delete id="deleteProd" parameterType="string">
+		DELETE FROM prod
+		WHERE prodKeyNum=#{prodKeyNum}
+	</delete>
+
+	
+	
+	
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- 캠핑장 갯수 -->
+	<select id="countSite" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT rownum as rm, c.*
+		    FROM(SELECT b.*
+		        FROM(SELECT a.*
+		            FROM(SELECT *
+		                FROM campsite 
+		                ORDER BY campKeyNum)a
+		            <if test='table eq "all"'>
+		            </if>
+		            <if test='table eq "a"'>
+					WHERE a.campDo = '인천시'
+		            </if>    
+		            <if test='table eq "b"'>
+					WHERE a.campDo = '서울시'
+		            </if>
+		            <if test='table eq "c"'>
+					WHERE a.campDo = '경기도'
+		            </if>
+		            <if test='table eq "d"'>
+					WHERE a.campDo in ('경상도', '대구시')
+		            </if>
+		            <if test='table eq "e"'>
+					WHERE a.campDo in ('충청도', '대전시', '세종시')
+		            </if>
+		            <if test='table eq "f"'>
+					WHERE a.campDo = '강원도'
+		            </if>
+		            <if test='table eq "g"'>
+					WHERE a.campDo = '제주도'
+		            </if>
+		            <if test='table eq "h"'>
+					WHERE a.campDo = '전라도'
+		            </if>
+		            <if test='table eq "i"'>
+					WHERE a.campDo in ('부산시', '울산시')
+		            </if>
+		            )b
+		        <if test="searchWord != null">
+		         <if test="searchKey eq 'campKeyNum'">
+		            WHERE b.campKeyNum = #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'campName'">
+		            WHERE b.campName LIKE '%'||#{searchWord}||'%'
+		         </if>
+		    	</if>       
+		    )c
+		)d
+	</select>
+	
+	<!-- 전체 캠핑장 리스트-->
+	<select id="listAllSite" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="CampSiteDTO">
+		SELECT d.*
+		FROM(SELECT rownum as rm, c.*
+		    FROM(SELECT b.*
+		        FROM(SELECT a.*
+		            FROM(SELECT *
+		                FROM campsite 
+		                ORDER BY campKeyNum)a
+		            <if test='table eq "all"'>
+		            </if>
+		            <if test='table eq "a"'>
+					WHERE a.campDo = '인천시'
+		            </if>    
+		            <if test='table eq "b"'>
+					WHERE a.campDo = '서울시'
+		            </if>
+		            <if test='table eq "c"'>
+					WHERE a.campDo = '경기도'
+		            </if>
+		            <if test='table eq "d"'>
+					WHERE a.campDo in ('경상도', '대구시')
+		            </if>
+		            <if test='table eq "e"'>
+					WHERE a.campDo in ('충청도', '대전시', '세종시')
+		            </if>
+		            <if test='table eq "f"'>
+					WHERE a.campDo = '강원도'
+		            </if>
+		            <if test='table eq "g"'>
+					WHERE a.campDo = '제주도'
+		            </if>
+		            <if test='table eq "h"'>
+					WHERE a.campDo = '전라도'
+		            </if>
+		            <if test='table eq "i"'>
+					WHERE a.campDo in ('부산시', '울산시')
+		            </if>
+		            )b
+		        <if test="searchWord != null">
+		         <if test="searchKey eq 'campKeyNum'">
+		            WHERE b.campKeyNum = #{searchWord}
+		         </if>
+		         <if test="searchKey eq 'campName'">
+		            WHERE b.campName LIKE '%'||#{searchWord}||'%'
+		         </if>
+		    	</if>       
+		    )c
+		)d
+		WHERE d.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+
+	<!-- 캠핑장 삭제 -->
+	<delete id="deleteCamp" parameterType="string">
+		DELETE FROM campsite
+		WHERE campKeyNum=#{campKeyNum}
+	</delete>
+	
+
+</mapper>

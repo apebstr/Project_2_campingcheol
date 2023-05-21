@@ -1,0 +1,115 @@
+.layout {
+  width: 1430px;
+  width: 100%;
+}
+
+.layoutTop {
+  width: 100%;
+  height: auto;
+}
+
+.logo {
+  width: 400px;
+  height: 200px;
+  margin: auto;
+}
+
+.logo img {
+  width: 400px;
+  height: 200px;
+  margin-bottom: -200px;
+}
+
+.minibutton {
+  width: 250px;
+  float: right;
+  margin-top: -4.6%;
+}
+
+.cart_weather,
+.btns {
+  float: right;
+}
+
+.weather {
+  width: 90px;
+  height: 90px;
+  margin-bottom: -200px;
+  float: right;
+  margin-right: 80px;
+  margin-top: 100px;
+}
+
+.btns {
+  margin-top: 10px;
+}
+
+.cart {
+  width: 50px;
+  height: 50px;
+}
+
+.minibutton button {
+  background-color: rgba(242 186 31);
+  border: none;
+  margin: 5px;
+  padding: 7px 20px;
+  border-radius: 10%;
+  font-weight: 800;
+}
+
+.toolbar {
+  width: 100%;
+  height: 72px;
+  background-color: rgb(0 110, 82);
+  clear: both;
+}
+
+.toolbarText {
+  display: inline-block;
+  width: 24%;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 550;
+  font-size: 14pt;
+}
+
+.toolbarTextdiv {
+  width: 1400px;
+  margin: 0 auto;
+  background-color: rgb(0 110, 82);
+}
+
+.toolbarText a {
+  text-decoration: none;
+  color: white;
+}
+
+.bottom {
+  clear: both;
+  height: 175px;
+  width: 100%;
+  background-color: rgb(0 110, 82);
+  bottom: 0px;
+  margin: 0 auto;
+
+  margin-top: 200px;
+}
+
+.bottomText {
+  margin: 0 auto;
+  height: 100px;
+  width: 1000px;
+  line-height: 80px;
+}
+
+.bottomText p {
+  float: left;
+  width: 24%;
+  text-align: center;
+}
+
+.bottom a {
+  text-decoration: none;
+  color: white;
+}

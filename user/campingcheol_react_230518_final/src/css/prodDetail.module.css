@@ -1,0 +1,224 @@
+.prodDetail {
+  font-family: "SCDream1";
+  width: 1000px;
+  margin: auto;
+}
+
+.topText {
+  text-align: center;
+  font-size: 22pt;
+  font-weight: 550;
+  margin: 80px;
+}
+
+.prodExpain {
+  height: 550px;
+}
+
+.prodLeft {
+  width: 420px;
+  height: 470px;
+  display: inline-block;
+
+  float: left;
+}
+
+.prodLeft img {
+  width: 420px;
+  height: 470px;
+}
+
+.prodRight {
+  width: 500px;
+  height: 470px;
+  display: inline-block;
+  float: left;
+  margin: 10px;
+  margin-left: 30px;
+  /* border: solid; */
+}
+.soldout {
+  /* border: solid; */
+  position: absolute;
+  margin-top: 50px;
+  width: 550px;
+  height: 200px;
+  background-color: rgba(211, 211, 211, 0.799);
+}
+
+.soldout div {
+  /* display: block; */
+  color: white;
+  margin-left: 180px;
+  margin-top: 60px;
+  font-size: 30pt;
+}
+.prodCategory {
+  border: solid 0.5px gray;
+  padding: 10px;
+  margin-left: 30px;
+  z-index: 999;
+}
+
+.prodCount_price {
+  margin-top: 135px;
+}
+
+.prodCount {
+  display: inline-block;
+  width: 200px;
+  margin-left: 85px;
+}
+
+.prodCount input {
+  display: inline-block;
+  width: 40px;
+  border: solid 0.3px rgb(187, 184, 184);
+}
+
+.prodCount button,
+.prodCount input {
+  margin: 3px;
+}
+
+.prodCount button {
+  border: none;
+}
+
+.prodPrice {
+  display: inline-block;
+  font-size: 20pt;
+  float: right;
+}
+
+.prodBrand {
+  margin-left: 30px;
+  font-size: 15pt;
+  font-weight: 600;
+  color: gray;
+}
+.prodRight .prodName {
+  margin-left: 30px;
+  font-size: 20pt;
+  font-weight: 600;
+}
+.ratingMean {
+  margin-left: 30px;
+}
+.buyBtn {
+  margin-top: 20px;
+}
+
+.buyBtn button {
+  width: 200px;
+  height: 60px;
+  margin-left: 50px;
+}
+
+.prodReadCount {
+  float: right;
+  font-size: 12pt;
+  margin-bottom: -40px;
+  margin-top: 80px;
+  /* border: solid; */
+}
+
+.prodRatingTop {
+  clear: both;
+}
+.prodRating {
+  margin-top: 50px;
+}
+
+.prodRatingTop {
+  font-size: 17pt;
+  font-weight: 600;
+}
+
+.writeReview {
+  height: 200px;
+}
+
+.form-control {
+  width: 600px;
+}
+
+.writeInput {
+  width: 600px;
+}
+.reviewLeft p:nth-of-type(1) {
+  margin-top: 20px;
+}
+
+.prodReview {
+  margin-top: 50px;
+  background-color: rgb(243, 243, 243);
+  border-bottom: solid gray 1px;
+}
+
+.reviewLeft {
+  display: inline-block;
+  float: left;
+  width: 78%;
+  border: solid 0.3px rgb(187, 184, 184);
+}
+
+.reviewLeft p {
+  margin-left: 20px;
+}
+
+.reviewRight {
+  display: inline-block;
+  float: right;
+  width: 15%;
+  height: 50%;
+  margin: 40px 10px;
+  margin-right: 25px;
+}
+
+.reviewRight button {
+  width: 100%;
+  height: 100%;
+  border: solid rgb(197, 192, 192) 1px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 5%;
+  font-weight: 600;
+}
+
+.prodReview p {
+  margin-left: 20px;
+}
+
+.reviewProdName {
+  font-size: 14pt;
+  padding-top: 10px;
+
+  font-weight: 600;
+}
+
+.prodReview p:nth-of-type(4) {
+  margin-left: 85%;
+  padding: 10px;
+}
+
+.reviewPaging {
+  /* width: 100px; */
+  margin: auto;
+  margin-top: 100px;
+  /* border: solid; */
+
+  display: flex;
+  justify-content: center;
+}
+
+.cartAlert {
+  background-color: rgba(240, 240, 240, 0);
+}
+
+.prodStock {
+  position: absolute;
+  margin-top: 70px;
+  margin-left: 90px;
+  color: red;
+}

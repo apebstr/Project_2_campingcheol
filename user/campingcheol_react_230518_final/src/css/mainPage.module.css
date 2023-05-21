@@ -1,0 +1,346 @@
+.mainPage {
+  font-family: "SCDream1";
+  width: 1900px;
+  margin: 80px auto;
+  overflow: hidden;
+}
+
+.second_main {
+  font-family: "SCDream1";
+  width: 1500px;
+  margin: 80px auto;
+  overflow: hidden;
+}
+
+/* 캘린더 + 검색 */
+.mainImg {
+  width: 1500px;
+  height: 600px;
+  /* border없애면 안대요 */
+  border: solid rgba(139, 69, 19, 0);
+  margin: 30px auto;
+  /* background-color: aquamarine; */
+  background-image: url(https://static.wixstatic.com/media/9fffba_d9165a2b71264b359c35cf0c9df53059~mv2.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 캘린더 + 검색 위치잡기용 */
+.formdiv {
+  width: 1300px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.471);
+  border-radius: 10pt;
+  margin: auto;
+
+  margin-top: 100px;
+}
+
+.calendar {
+  float: left;
+  /* border: solid; */
+  padding: 30px;
+  height: 400px;
+  margin-top: 30px;
+}
+.searchAll {
+  float: left;
+  /* border: solid; */
+  padding: 50px;
+  padding-top: 120px;
+  height: 400px;
+
+  /* background-color: blueviolet; */
+}
+
+.searchcontent {
+  /* border: solid; */
+  width: 800px;
+  position: absolute;
+  margin-top: -260px;
+  margin-left: 510px;
+}
+.searchcontent select {
+  width: 250px;
+  height: 50px;
+  border: none;
+  border-bottom: 2.5px solid rgb(81, 81, 81);
+  margin-left: 30px;
+  margin-right: 20px;
+  background-color: none;
+  background: transparent;
+  /* color: rgba(0, 0, 0, 0); */
+  outline: none;
+}
+
+.searchcontent select option {
+  /* display: inline-block; */
+  /* padding: 10px; */
+  /* background: rgba(0, 0, 0, 0.3); */
+  /* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4); */
+}
+
+.searchcontent input {
+  width: 250px;
+  height: 50px;
+  border: none;
+  border-bottom: 2.5px solid rgb(81, 81, 81);
+  margin-left: 30px;
+  margin-right: 20px;
+  background-color: none;
+  background: transparent;
+  color: black;
+  outline: none;
+}
+
+.mainPageSearch {
+  border: none;
+  padding: 15px 50px;
+  border-radius: 20pt;
+  font-weight: 700;
+  color: white;
+  background-color: #47483c;
+}
+
+.searchcontent input::placeholder {
+  color: black;
+}
+.searchBtn {
+  float: left;
+  /* border: solid; */
+  height: 400px;
+  width: 130px;
+
+  /* background-color: blueviolet; */
+}
+
+.searchBtn button {
+  display: block;
+  margin: auto;
+  margin-top: 155px;
+  padding: 30px 40px;
+}
+
+.campsiteRecommand {
+  /* 이거이거이거 조정 */
+  width: 1000%;
+  height: 600px;
+  /* margin-left: -500px; */
+}
+
+.campsite {
+  float: left;
+}
+
+/*  */
+
+.campSite img {
+  display: block;
+  margin: auto;
+  width: 450px;
+  height: 330px;
+  margin-top: 20px;
+}
+
+.campSite p:nth-of-type(1) {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 22pt;
+  font-weight: 600;
+  color: black;
+}
+
+.campSite p:nth-of-type(2) {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15pt;
+  font-weight: 600;
+  color: gray;
+}
+
+.campSite p:nth-of-type(3) {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12pt;
+  /* font-weight: 600; */
+  color: black;
+}
+
+.campSite span {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 3px;
+  background-color: rgba(211, 211, 211, 0.479);
+  border-radius: 5pt;
+  color: #838383;
+}
+
+.newStuffs {
+  clear: both;
+  /* 수정필요 */
+  width: 1000%;
+  height: 500px;
+}
+
+.newstuff {
+  float: left;
+}
+
+.campTag {
+  margin-top: 100px;
+  clear: both;
+}
+
+/* 슬라이드 화살표..  */
+
+.recomandarrow {
+  width: 1800px;
+  height: 80px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 1600%);
+}
+.newStuffarrow {
+  width: 1800px;
+  height: 80px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50.5%, 2500%);
+}
+
+.nothing {
+  width: 1500px;
+  height: 80px;
+  float: left;
+}
+
+.arrowImg {
+  display: block;
+  float: left;
+}
+
+.recomandarrow .arrowImg:nth-of-type(1),
+.newStuffarrow .arrowImg:nth-of-type(1) {
+  margin-left: 105px;
+}
+
+.campSite {
+  float: left;
+  width: 500px;
+  height: 100%;
+
+  /* 슬라이드 */
+  /* display: flex;
+  width: 500px; */
+  /* 슬라이드 이미지의 너비 */
+  /* margin-left: 0;
+  transition: margin-left 1s ease;
+  transition: all 2s; */
+}
+
+.campSite div {
+  width: 97%;
+  height: 100%;
+  margin: auto;
+  border: solid rgb(215, 214, 214) 0.3px;
+  /* border-radius: 10pt; */
+}
+
+.recommandText {
+  margin-top: 100px;
+  font-size: 25pt;
+  font-weight: 700;
+}
+
+.recommandText + hr {
+  border: solid 3px rgb(0, 0, 0);
+}
+.newstuff {
+  width: 300px;
+  height: 100%;
+}
+
+.newstuff div {
+  width: 97%;
+  height: 100%;
+  border: solid rgb(215, 214, 214) 0.3px;
+  /* border-radius: 10pt; */
+}
+.newstuff img {
+  width: 250px;
+  height: 280px;
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.newstuff p:nth-of-type(1) {
+  width: 150px;
+  height: 30px;
+  margin: auto;
+  margin-top: 30px;
+  /* border: solid; */
+}
+
+.newstuff p:nth-of-type(2) {
+  text-align: center;
+  font-size: 13pt;
+  font-weight: 800;
+  padding: 5px;
+  /* border: solid; */
+  height: 70px;
+  color: black;
+}
+
+.newstuff p:nth-of-type(3) {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 10pt;
+  font-weight: 600;
+  color: gray;
+  /* border: solid; */
+}
+
+/* 태그관련 */
+.tags {
+  width: 1300px;
+  padding: 40px 50px;
+  margin: auto;
+  /* background-color: bisque; */
+  margin-top: 50px;
+}
+
+.tags input {
+  display: none;
+}
+.tags label {
+  cursor: pointer;
+  display: inline-block;
+  /* background-color: aqua; */
+  border: solid rgb(252 187 21) 3px;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 15pt;
+  /* font-weight: 600; */
+}
+
+.tagSubmitBtn {
+  display: block;
+  margin: auto;
+
+  border: none;
+  padding: 15px 50px;
+  border-radius: 20pt;
+  font-weight: 700;
+  color: white;
+  background-color: rgb(0 110, 82);
+}
+
+.mainreviewCount {
+  float: right;
+  font-size: 12px;
+  /* position: absolute; */
+  margin-top: 4px;
+  color: lightgray;
+  /* border: solid; */
+}

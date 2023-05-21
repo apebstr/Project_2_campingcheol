@@ -1,0 +1,49 @@
+.prodpayFin {
+  font-family: "SCDream1";
+}
+
+.prodpayFinText {
+  font-size: 25pt;
+  text-align: center;
+  margin: 60px auto;
+}
+
+.payFinInfo {
+  width: 800px;
+  margin: auto;
+}
+
+.payFinInfoText {
+  font-size: 15pt;
+  font-weight: 600;
+}
+
+.payFinInfo table {
+  margin: auto;
+  width: 800px;
+  border: solid 1px black;
+  border-collapse: collapse;
+}
+
+.payFinInfoTable th {
+  background-color: rgb(215, 215, 215);
+  padding: 15px;
+  border: solid 1px black;
+  text-align: center;
+}
+
+.payFinInfoTable td {
+  border: solid 1px black;
+
+  padding-left: 20px;
+}
+
+.payfinBtn {
+  margin: 50px auto;
+  width: 310px;
+}
+
+.payfinBtn button {
+  margin: 15px;
+  padding: 8px 15px;
+}

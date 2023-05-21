@@ -1,0 +1,101 @@
+.view_fin_container {
+  padding-top: 80px;
+  width: 1300px;
+  /* border: solid; */
+  margin: auto;
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
+.view_fin_top {
+  font-size: 25pt;
+  text-align: center;
+}
+
+.view_fin_img {
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.view_fin_de_top {
+  /* border: solid; */
+  text-align: center;
+  margin: 40px auto;
+}
+
+.view_fin_1 {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.view_fin_2 {
+  font-size: 15pt;
+  font-weight: 600;
+  color: gray;
+}
+
+.reservFinText {
+  /* border: solid; */
+  font-size: 20pt;
+}
+
+.view_fin_table_con {
+  /* width: 100%; */
+  /* border: solid; */
+  /* text-align: center; */
+  padding: 30px;
+}
+
+.view_fin_table {
+  /* border: solid 2px lightgray; */
+  width: 700px;
+  /* display: block; */
+  margin: auto;
+  border-collapse: collapse;
+  /* border-radius: 10pt; */
+  margin-top: 40px;
+}
+.view_fin_table td {
+  padding: 14px 20px;
+  padding-left: 40px;
+  border-bottom: 1px solid rgb(194, 193, 192);
+}
+
+.fin_info {
+  margin-top: 100px;
+  /* text-align: center; */
+}
+
+.fin_info_title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.fin_info_tail {
+  /* border: solid; */
+  width: 800px;
+  text-align: left;
+  margin: auto;
+}
+.fin_info_tail table {
+  margin-top: 70px;
+}
+.fin_info_tail table td {
+  /* height: 10px; */
+  padding: 15px;
+  font-size: 14pt;
+  border-bottom: 1px solid rgb(194, 193, 192);
+}
+.fin_info_tail table tr td:nth-of-type(1) {
+  width: 200px;
+}
+
+.reservBtn {
+  display: flex; /* 가로 방향으로 요소를 배치합니다. */
+  justify-content: center; /* 가운데 정렬합니다. */
+}
+
+.reservBtn button {
+  margin: 10px;
+}

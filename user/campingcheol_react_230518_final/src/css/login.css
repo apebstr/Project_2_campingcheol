@@ -1,0 +1,39 @@
+.login {
+  font-family: 'SCDream1';
+  width: 1000px;
+  margin: auto;
+  height: auto;
+}
+
+.loginText {
+  font-size: 25pt;
+  text-align: center;
+  margin: 60px auto;
+}
+
+.loginfrm form {
+  width: 500px;
+  margin: 20px auto;
+}
+.loginfrm form p {
+  width: 500px;
+  font-size: 15pt;
+  margin: 20px auto;
+}
+
+.input-group-text input {
+  display: block;
+  margin: auto;
+  width: 400px;
+}
+
+#login_loginBtn {
+  display: block;
+  width: 500px;
+  margin: 30px auto;
+}
+
+#login_signupBtn {
+  display: block;
+  margin: auto;
+}

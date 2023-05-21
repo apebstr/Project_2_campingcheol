@@ -1,0 +1,258 @@
+.view_order_container {
+  padding-top: 80px;
+  width: 1400px;
+  margin: 0 auto;
+}
+
+.view_order_top {
+  text-align: center;
+  font-size: 25pt;
+  font-weight: 600;
+  margin-bottom: 30px;
+  /* margin-left: 43%; */
+}
+
+.view_order_box {
+  margin-top: 100px;
+  /* border: solid; */
+}
+
+.view_img {
+  /* width: 600px; */
+  float: left;
+  /* border: solid; */
+}
+
+.view_img img {
+  /* display: block; */
+  /* margin: 20px auto; */
+  margin: 45px;
+  width: 600px;
+  height: 400px;
+}
+
+.view_order_libox {
+  /* border: solid; */
+  float: left;
+  width: 600px;
+  margin-top: 70px;
+  margin-left: 70px;
+  /* margin-right: 50px; */
+}
+
+.campRervDate {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.campRervDate + span {
+  display: inline-block;
+  font-size: 15pt;
+  margin-top: -5px;
+  font-weight: 600;
+  color: rgba(128, 128, 128, 0.742);
+}
+.view_order_libox p:nth-of-type(2) {
+  font-size: 18pt;
+  margin-top: 10px;
+}
+
+.view_order_drop {
+  width: 500px;
+  margin-top: 35px;
+  border: 2px solid lightgray;
+  border-radius: 10pt;
+  height: 220px;
+}
+
+.view_order_drop th {
+  /* border: solid; */
+  /* width: 300px; */
+}
+.view_order_drop th p {
+  width: 100px;
+  margin-left: 40px;
+  /* text-align: center; */
+}
+
+.view_order_drop td {
+  width: 500px;
+  /* border: solid; */
+}
+
+.view_order_drop > p:nth-of-type(1) {
+  font-size: 15pt;
+  /* text-align: center; */
+  margin-top: 40px;
+  margin-left: 95px;
+  font-weight: 600;
+  color: black;
+}
+
+#dropdownMenuButton {
+  width: 150px;
+}
+.view_order_drop table {
+  /* border: solid; */
+  display: block;
+  width: 400px;
+  margin: auto;
+  margin-top: 25px;
+}
+
+.campReservInfo {
+  clear: both;
+  padding-top: 1px;
+  width: 1300px;
+  margin: auto;
+}
+
+.res_info {
+  margin-top: 80px;
+}
+
+.res_detail {
+  width: 1100px;
+  margin: auto;
+  border: 1px solid rgba(128, 128, 128, 0.604);
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; */
+}
+
+.reservInfo {
+  /* border: solid; */
+  width: 900px;
+  margin: 30px auto;
+  font-size: 15pt;
+}
+.reservInfo th {
+  color: gray;
+  padding: 10px 5px;
+}
+.reservInfo td {
+  text-align: right;
+  /* text-decoration: underline; */
+}
+/* .info_1,
+.info_2 {
+  flex: 1;
+}
+
+.info_1 p {
+  margin: 25px;
+}
+
+.info_2 p {
+  font-size: 15pt;
+  margin-top: 20px;
+} */
+
+.res_price_con {
+  margin-top: 80px;
+  /* border: solid; */
+}
+
+.res_price {
+  border: 1px solid rgba(128, 128, 128, 0.604);
+  /* height: 110px; */
+  /* text-align: right; */
+  /* border: solid; */
+
+  width: 1100px;
+  margin: auto;
+}
+
+.res_price table {
+  /* border: solid; */
+  width: 900px;
+  margin: 30px auto;
+  font-size: 15pt;
+}
+
+.res_price table td {
+  padding: 10px 5px;
+}
+.totalText {
+  font-weight: 700;
+  color: gray;
+}
+.res_price table .priceCal {
+  text-align: right;
+}
+
+.totalText .roomTotalPrice {
+  /* border: solid; */
+  width: 1050px;
+  margin: 20px auto;
+}
+
+.roomTotalPrice p {
+  /* float: left; */
+  display: inline-block;
+  /* border: solid; */
+}
+.roomTotalPrice p:nth-of-type(1) {
+  font-size: 14pt;
+
+  padding-left: 100px;
+  padding-top: 10px;
+}
+.roomTotalPrice p:nth-of-type(2) {
+  font-size: 20pt;
+  float: right;
+}
+
+.res_price > p:nth-of-type(1) {
+  /* margin-right: 30px; */
+  margin-top: 20px;
+  /* border: solid; */
+  text-align: right;
+  padding: 10px 30px;
+}
+.res_tool_con {
+  margin-top: 80px;
+}
+
+.res_tool {
+  width: 1100px;
+  margin: auto;
+}
+.form-check {
+  border: 1px solid rgba(128, 128, 128, 0.604);
+}
+
+.form-check-label {
+  font-weight: bold;
+}
+
+.res_tool-list {
+  /* display: flex; */
+}
+
+.res_tool_li {
+  /* margin-left: 20px; */
+  /* border: solid; */
+  width: 80%;
+  padding: 10px 0px;
+  margin: auto;
+  margin-top: 20px;
+}
+.res_tool_li input {
+  display: none;
+}
+.res_tool_li button {
+  padding: 10px 20px;
+}
+
+.res_tool_li img {
+  margin-right: 70px;
+}
+
+.btn-payment {
+  background-color: rgb(0 110, 82);
+  color: white;
+  margin-top: 20px;
+  margin-left: 45%;
+}

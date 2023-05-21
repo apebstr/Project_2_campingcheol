@@ -1,0 +1,580 @@
+/* 작은 주제 */
+.user {
+  width: 1700px;
+  margin: auto;
+
+  /* padding-right: 280px; */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+h3 {
+  margin-bottom: 30px;
+}
+
+/* 폰트 통일 */
+div {
+  font-family: "SCDream1";
+}
+
+/* 버튼 스타일 */
+.btn-selectdrop {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 20px;
+}
+
+.btn-selectdrop:hover {
+  background-color: rgb(43, 43, 153);
+  color: white;
+}
+
+.btn-alldrop {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 20px;
+}
+
+.btn-alldrop:hover {
+  background-color: rgb(43, 43, 153);
+  color: white;
+}
+
+.btn_detail {
+  background-color: #3e71d5;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 10px;
+}
+
+.btn_detail:hover {
+  background-color: #3e71d5;
+  color: white;
+}
+
+.btn-write {
+  background-color: #3e71d5;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 10px;
+}
+
+.btn-write:hover {
+  background-color: #3e71d5;
+  color: white;
+}
+
+.btn-delete {
+  background-color: rgb(194, 60, 60);
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 20px;
+}
+
+.btn-delete:hover {
+  background-color: red;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #1e3c7a;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 20px;
+}
+
+.btn-edit:hover {
+  background-color: #1e3c7a;
+  color: white;
+}
+.addr_btn:disabled {
+  color: black;
+  background-color: white;
+  border: gray solid 2px;
+}
+
+.btn-drop {
+  background-color: rgb(194, 60, 60);
+  color: white;
+  border: none;
+  border-radius: 10%;
+  font-weight: 800;
+  margin-right: 20px;
+}
+
+.btn-drop:hover {
+  background-color: red;
+  color: white;
+}
+
+/* 좌측 고정 메뉴 스타일 */
+.userMenu_table {
+  background-color: rgb(0 110, 82);
+  font-size: 20px;
+}
+
+/* .userMenu_table tr:hover {
+  background-color: rgb(42, 112, 42);
+} */
+
+.userMenu_table td {
+  color: white;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.userMenu_table td .navlink {
+  color: white;
+  text-decoration: none;
+}
+
+.userMenu_teel {
+  width: 200px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+/* 회원정보관리 */
+.user {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 좌측 고정바 자리 */
+.usermenu {
+  flex: 1;
+}
+
+/* 회원정보관리 자리 */
+.loginfrm {
+  flex: 2;
+}
+
+/* 캠핑 찜목록 자리 */
+.campCart {
+  flex: 2;
+  /* width: 1000px; */
+  /* text-align: center; */
+}
+
+/* 캠핑 이용목록 자리 */
+.campPay {
+  width: 1250px;
+
+  /* text-align: center; */
+}
+
+.campPay th {
+  padding: 20px;
+  /* padding: 20px 50px; */
+}
+
+/* 캠핑용품 장바구니 자리 */
+.prodCart {
+  flex: 2;
+}
+
+/* 캠핑용품 결제내역 자리 */
+.prodPay {
+  flex: 2;
+}
+
+/* 내가 쓴 후기관리 자리 */
+.myReview {
+  /* flex: 2; */
+  width: 1200px;
+}
+
+/* 회원정보관리 */
+.myprofile input {
+  width: 500px;
+}
+
+.loginfrm p {
+  font-weight: bold;
+}
+
+.btn-editUserPass {
+  margin-left: 150px;
+  margin-top: 10px;
+}
+
+/* .thisAddress {
+  width: auto;
+} */
+
+/* 캠핑 찜목록 */
+#cCart {
+  text-align: center;
+}
+
+/* 찜목록 하나하나 */
+#cCartlist {
+  display: flex;
+  width: 80%;
+  height: 250px;
+  border-bottom: 1px solid gray;
+  padding-top: 25px;
+}
+
+#cCartlist tr {
+  height: 350px;
+}
+
+#cCartlist th {
+  height: 350px;
+}
+
+#cCartlist td {
+  display: inline-block;
+  width: 100%;
+  margin-left: 50px;
+  margin-top: 30px;
+  border: none;
+  font-size: 20px;
+}
+
+#cCartlist img {
+  width: 300px;
+  height: 200px;
+}
+
+#cCartlist td #detail {
+  background-color: #3e71d5;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5pt;
+  margin: 5px;
+
+  color: white;
+}
+
+#cCartlist td #detail:hover {
+  /* background-color: blue; */
+}
+
+#delete {
+  background-color: #f6b569;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5pt;
+  margin: 5px;
+  color: white;
+}
+
+#delete:hover {
+  /* background-color: red; */
+}
+
+.prodInfo img {
+  width: 300px;
+  height: 200px;
+  float: left;
+}
+
+/* 캠핑장 이용내역 */
+#cPaylist {
+  width: 160px;
+  display: inline-block;
+  text-align: center;
+}
+
+.cPaynav {
+  /* font-size: 13pt; */
+  height: 70px;
+  background-color: gainsboro;
+}
+.cPaynav th {
+}
+
+.paypaycamp tr th {
+  padding-top: 30px;
+  border-bottom: 1px solid gray;
+}
+
+.paypaycamp #btnoutline {
+  background-color: transparent;
+  color: black;
+  border: solid green 3px;
+  /* margin-left: 10px; */
+}
+.paypaycamp #btnreview {
+  color: black;
+  border: solid #85c585 3px;
+  margin-left: 20px;
+}
+
+/* 캠핑장 이름 */
+#cName {
+  display: block;
+  text-align: center;
+}
+
+.cPaylist th {
+  text-align: center;
+  width: 160px;
+  font-size: 16px;
+}
+
+.cPaylist td {
+  display: flex;
+  font-size: 15px;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
+  border: none;
+  margin-top: 20px;
+}
+
+/* 캠핑장 이용목록 상태 */
+.writeReview {
+  word-break: break-all;
+  line-height: 1cm;
+}
+
+#btnreview {
+  color: white;
+  border: none;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.pCartlist th {
+  text-align: center;
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  border-bottom: 2px solid black;
+}
+
+.pCartlist thead th {
+  padding: 20px 10px;
+}
+
+/* 확인용 */
+.pCartlist td {
+  border-bottom: 0.3px solid gray;
+  text-align: center;
+  padding: 10px;
+}
+
+/* 캠핑용품 장바구니 체크박스 */
+.checkBox {
+  /* position: absolute; */
+  text-align: center;
+  vertical-align: middle;
+  float: left;
+}
+
+.checkBox input {
+  width: 30px;
+  height: 30px;
+}
+
+.pCartlist img {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+}
+
+.allcheck input {
+  /* position: relative; */
+  /* margin-top: 10px; */
+  /* margin-left: 5px; */
+  width: 30px;
+  height: 30px;
+  /* float: left; */
+}
+
+.prodInfo {
+  display: flex;
+  align-items: center;
+}
+
+.prodInfo img {
+  margin-right: 10px;
+  width: 200px;
+  height: 200px;
+}
+
+.prodTitle div {
+  margin-left: 50px;
+}
+
+.indeQuantity {
+  vertical-align: middle;
+}
+
+/* 캠핑용품 장바구니 최종가격 정보 */
+.cartinfo {
+  height: 200px;
+  /* width: 97%; */
+  /* position: relative; */
+  /* bottom: -150px; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  background-color: gainsboro;
+  /* margin-left: -10px; */
+
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 20px;
+}
+
+.leftinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.rightinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.cartinfo + button {
+  /* position: relative; */
+  /* bottom: -200px; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  display: block;
+
+  margin: auto;
+  margin-top: 50px;
+}
+
+/* 후기관리 페이지에서 캠핑창, 캠핑용품 고르는 버튼 */
+.tableButtons {
+  display: flex;
+  border: none;
+  font-size: 35px;
+  text-align: center;
+  margin-left: 250px;
+}
+
+.tableButtons .active {
+  color: rgb(0 110, 82);
+  font-weight: bold;
+}
+
+/* 캠핑장 고르는 버튼 */
+#camp {
+  background-color: transparent;
+  border: none;
+  margin-right: 200px;
+}
+
+/* 캠핑용품 고르는 버튼 */
+#prod {
+  background-color: transparent;
+  border: none;
+  margin-left: 200px;
+}
+
+/* 리뷰리스트 테이블 */
+.reviewList th {
+  text-align: center;
+  width: 200px;
+  height: 60px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.reviewList tr {
+  text-align: center;
+  width: 150px;
+  font-size: 20px;
+  margin-left: 200px;
+}
+
+.reviewList td {
+  height: 150px;
+  border-bottom: 2px solid gray;
+}
+
+/* 캠핑장 후기수정 모달 */
+.updateCamp {
+  text-decoration: none;
+  color: white;
+}
+
+.updateCamp:hover {
+  background-color: blue;
+}
+
+Modal.Body {
+  width: 500px;
+  height: 500px;
+  margin: auto;
+}
+
+Modal.Body p {
+  text-align: center;
+}
+
+#thismodal img {
+  width: 300px;
+  height: 200px;
+  display: block;
+  margin: auto;
+}
+
+.reviewRating {
+  margin-top: 30px;
+  margin-left: 40px;
+}
+
+.writeCamp {
+  display: block;
+  resize: none;
+  width: 400px;
+  height: 140px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.writeProd {
+  display: block;
+  resize: none;
+  width: 400px;
+  height: 140px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+/*주소찾기, 닉네임중복체크 버튼 */
+.addr_btn {
+  /* border: solid lightgray 2px; */
+  border: none;
+  border-radius: 5pt;
+  padding: 5px 10px;
+  /* background-color: rgb(17, 17, 17); */
+  background-color: #1e3c7a;
+  /* 이거 수정하기  */
+  color: white;
+}

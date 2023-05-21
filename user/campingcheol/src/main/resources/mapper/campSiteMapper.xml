@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.campingcheol.campSite.dao.CampSiteDAO">
+
+	<!-- 페이징 처리 -->
+	<select id="count" resultType="int" parameterType="map">
+	SELECT COUNT(*) FROM campsite
+	    <where>
+	        <if test="searchWord != null and searchWord != ''">
+	            AND campname LIKE '%' || #{searchWord} || '%'
+	        </if>
+	        <if test="campDo != null and campDo != ''">
+	            AND campDo LIKE '%' || #{campDo} || '%'
+	        </if>
+	    </where>
+	</select>
+	
+
+
+	<resultMap type="CampSiteDTO" id="contentSelect" autoMapping="true"></resultMap>
+	
+	<!-- 캠핑장 상세내용 가져오기 -->
+	<select id="getContent" resultMap="contentSelect" parameterType="int">
+		SELECT a.*,b.rating as AvgRating
+		FROM (
+		    SELECT c.*
+		    FROM campsite c
+			)a, (SELECT campkeynum, TO_CHAR(ROUND(AVG(campReviewRating),1), 'FM999999999.0') as rating
+				FROM campReview
+				GROUP BY campKeyNum)b
+		        WHERE a.campkeynum = b.campkeynum(+) AND a.campkeynum = #{camkeynum}
+	</select>
+ 
+ 
+ 	<!--캠핑장 리스트 가져오기 + 캠핑장 검색하기  + 메인페이지 캠핑장 검색 + 후기 평균평점 select-->
+   <select id="selectSearchList" parameterType="CampSitePageDTO" resultType="CampSiteDTO">      
+      SELECT a.*,b.rating as AvgRating
+      FROM (
+      SELECT rownum AS rm,z.*
+      FROM (SELECT  c.*
+          FROM campsite c
+          ORDER BY c.campkeynum
+         )z
+         <where>
+                 <if test="searchWord != null and searchWord != ''">
+                     AND campname LIKE '%' || #{searchWord} || '%'
+                 </if>
+                 <if test="campDo != null and campDo != ''">
+                     AND campDo LIKE '%' || #{campDo} || '%'
+               </if>
+             </where> 
+             
+         )a, (SELECT campkeynum, TO_CHAR(ROUND(AVG(campReviewRating),1), 'FM999999999.0') as rating
+            FROM campReview
+            GROUP BY campKeyNum)b
+              WHERE a.campkeynum = b.campkeynum(+)
+              <![CDATA[
+              AND a.rm>=#{startRow} AND a.rm <= #{endRow}
+             ]]>
+   </select>
+
+
+
+
+	<!--카테고리별 도시 개수 가져오기 -->
+	<select id = "campCategoryCount" parameterType="string" resultType="int">
+		SELECT count(*)
+		FROM campsite
+		WHERE campDo LIKE '%' || #{campDo} || '%'
+	</select>
+
+
+
+	<!-- 카테고리별 도시 리스트 가져오기 -->
+	<select id = "campCategory" parameterType="CampSitePageDTO" resultType="CampSiteDTO">
+		<![CDATA[
+		SELECT  a.rm, a.* 
+		FROM ( select rownum as rm, c.* from campsite c
+		WHERE campDo LIKE '%' || #{category}||'%') a
+		WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+		]]> 
+		
+	</select>
+
+
+
+	<!-- 캠핑장 상세 사진 가져오기 -->
+	<select id = "campPic" resultType="String" parameterType="int">
+		SELECT campPic
+		FROM campPic
+		WHERE campkeynum = #{campkeynum}
+	</select>
+
+
+
+	<!-- 캠핑장 room 정보 가져오기 + 캠핑장 예약내역 확인(선택한 날짜와 비교하려고)-->
+	<select id="campRoom" resultType="CampRoomDTO" parameterType="int">
+		SELECT a.*, b.*
+		FROM (
+		    SELECT campkeynum, campRoom, campRoomPrice
+		    FROM campRoom
+		    WHERE campkeynum = #{campkeynum}
+			) a
+			LEFT JOIN (
+		    	SELECT campReservStart, campReservEnd, campkeynum, campRoom
+		    	FROM campReserv
+				) b ON a.campkeynum = b.campkeynum AND a.campRoom = b.campRoom
+	</select>
+
+
+	
+	<!-- 상세정보 찜 여부 확인 데이터 -->
+	<select id="campLikeLoc" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM campLikeLoc
+		WHERE userID = #{userID}
+    	AND campKeyNum = #{campKeyNum}
+	</select>
+	
+
+	<!-- 상세정보 찜하기-->
+	<insert id="campLike" parameterType="CampJjimDTO" >
+		INSERT INTO campLikeLoc (campLikeLoc,campKeyNum, userID)
+		VALUES (campLikeLoc_seq.nextval,#{campKeyNum},#{userID})
+	</insert>
+
+
+	<!-- 상세정보 찜취소 -->
+	<delete id="campLikedel" parameterType="map">
+   		DELETE  
+    	FROM campLikeLoc 
+    	WHERE userID = #{userID}
+    	AND campKeyNum = #{campKeyNum}
+	</delete>
+
+
+
+	<!-- 주문내역 저장하기 -->
+	<insert id="campReservSave" parameterType="CampReservDTO" >
+		INSERT INTO campReserv (campReservNum, campKeyNum,userKeyNum,campRoom,campRoomCount,campReservStart,campReservEnd,campReservPerson,campReservDate,campReservCheck)
+		VALUES (campReserv_seq.nextval, #{campKeyNum}, #{userKeyNum}, #{campRoom}, #{campRoomCount}, #{campReservStart},
+			 #{campReservEnd}, #{campReservPerson}, #{campReservDate}, #{campReservCheck})
+	</insert>
+	
+	
+	
+	<!-- campReservNum 가져오기 -->
+	<select id="getCampReservNum" resultType="int">
+		select campReserv_seq.currval
+		from dual
+	</select>
+	
+	
+	
+	<!-- 결제정보 저장하기 -->
+	<insert id="campPay" parameterType="CampPayDTO">
+		INSERT INTO campPay(campPayKeyNum,campKeyNum,userKeyNum,campPayment,campPayCheck,campPayAmt,campReservNum,campReviewCheck)
+		VALUES (campPayKeyNum_seq.nextval,#{campKeyNum},#{userKeyNum},#{campPayment},#{campPayCheck},#{campPayAmt}, #{campReservNum},'false')
+	</insert>
+
+
+
+	
+	<!-- 태그 검색 -->
+		<select id="campsiteTag" parameterType="CampSitePageDTO" resultType="CampSiteDTO">
+			
+			 SELECT  t3.* 
+				FROM (SELECT rownum AS rm, t2.*
+					FROM(
+						SELECT *
+						FROM campsite
+						WHERE campKeynum IN (SELECT b.campKeynum
+						FROM tagData a
+						JOIN campsiteTag b ON a.tagKeynum = b.tagkeynum
+						WHERE a.tagKeynum IN
+							<foreach collection="tagKeynumList" item="tagSearch" open="(" separator="," close=")">
+			      				#{tagSearch}
+			   				</foreach>
+			   			
+						GROUP BY b.campKeynum
+						HAVING COUNT(DISTINCT a.tagKeynum) = #{tagCount})
+					)t2
+				)t3
+				
+				WHERE t3.rm BETWEEN #{startRow} AND #{endRow}
+			
+			
+		</select>
+	
+	
+	
+	
+	
+	<!--태그 페이징 처리 / 검색결과에 해당하는 값들의 갯수 구하기--> 
+	<select id="tagPaging"  parameterType="CampSitePageDTO" resultType="int">
+		SELECT count(*) 
+		FROM (
+			SELECT t2.*, rownum AS rm
+			FROM(
+				SELECT *
+				FROM campsite
+				WHERE campKeynum IN (SELECT b.campKeynum
+				FROM tagData a
+				JOIN campsiteTag b ON a.tagKeynum = b.tagkeynum
+				WHERE a.tagKeynum IN 
+						<foreach collection="tagKeynumList" item="tagSearch" open="(" separator="," close=")">
+			      			#{tagSearch}
+			   			</foreach>
+				GROUP BY b.campKeynum
+				HAVING COUNT(DISTINCT a.tagKeynum) = #{tagCount})
+                )t2
+                )t3
+	</select>
+
+
+	<!-- 캠핑장 후기 가져오기 -->
+	<select id="campReview" parameterType="CampSitePageDTO" resultType="CampRevDTO">
+		<![CDATA[
+		SELECT a.* 
+		FROM(
+		SELECT rownum AS rm,b.campRewNum,b.campKeyNum,b.userKeynum,b.campReviewContent,b.campReviewRating , TO_CHAR(b.campReviewDate, 'YYYY.MM.DD') as campReviewDate,ui.usernick
+		FROM(
+		SELECT * FROM campReview 
+		)b Join  USERINFO ui ON b.userKeynum = ui.userKeynum
+		where b.campKeyNum = #{campKeyNum}
+		ORDER BY campRewNum desc  ) a
+		WHERE a.rm>=#{startRow} AND a.rm <= #{endRow}
+		]]>
+	</select>
+
+
+	<!-- 캠핑장 후기 페이징 -->
+	<select id="reviewCount" parameterType="map" resultType="int">
+		SELECT count(*) 
+		FROM(
+		SELECT rownum AS rm, b.* ,ui.usernick
+		FROM(
+		SELECT * FROM campReview 
+		)b Join  USERINFO ui ON b.userKeynum = ui.userKeynum
+		where b.campKeyNum = #{campKeyNum}  ) a
+	</select>
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

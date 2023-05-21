@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.campingcheol.prod.dao.ProdDAO">
+<select id="prodCount" resultType="int">
+   SELECT count(*) FROM prod
+   WHERE prodState='0'
+</select>
+
+<!--상품리스트 가져오기-->
+<select id="prodList" parameterType="ProdPageDTO" resultType="ProdDTO">
+<![CDATA[
+      SELECT a.rm, a.*
+   FROM ( select rownum as rm, p.* from prod p
+          WHERE prodState='0') a
+   WHERE a.rm>=#{startRow} AND a.rm<=#{endRow} 
+   
+]]>
+</select>
+
+<!--상품상세정보 가져오기-->
+<select id="prodDetail" parameterType="int" resultType="ProdDTO">
+   SELECT * FROM prod
+   WHERE prodKeyNum=#{prodKeyNum}
+</select>
+
+<!--상품조회수 갱신하기 -->
+<update id="prodReadCount" parameterType="int">
+   UPDATE prod
+   SET prodReadCount=prodReadCount+1
+   WHERE prodKeyNum=#{prodKeyNum}
+</update>
+
+
+
+<!--카테고리별상품개수 가져오기-->
+<select id="prodCategoryCount" parameterType="string" resultType="int">
+   SELECT count(*)
+   FROM prod
+   WHERE prodcategory=#{category}
+   AND prodState='0'
+</select>
+
+<!-- 카테고리별상품리스트 가져오기 -->
+<select id="prodCategoryList" parameterType="ProdPageDTO" resultType="ProdDTO">
+<![CDATA[
+SELECT  a.rm, a.* 
+FROM ( select rownum as rm, p.* from prod p
+      WHERE prodCategory=#{category}
+      AND prodState='0') a
+WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+]]>
+</select>
+
+<!--검색상품개수 가져오기-->
+<select id="searchCount" parameterType="string" resultType="int">
+   SELECT count(*)
+   FROM prod
+   WHERE prodTitle LIKE '%' || #{search}||'%'
+   AND prodState='0'
+</select>
+
+<!-- 검색상품리스트 가져오기 -->
+<select id="prodSearchList" parameterType="ProdPageDTO" resultType="ProdDTO">
+<![CDATA[
+SELECT  a.rm, a.* 
+FROM ( select rownum as rm, p.* from prod p
+      WHERE prodTitle LIKE '%' || #{search}||'%'
+      AND prodState='0') a
+WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+]]>
+</select>
+
+
+
+<!-- 결제를 위한 유저정보 가져오기  -->
+<select id="userInfo" parameterType="int" resultType="MembersDTO">
+   SELECT * from userInfo
+   WHERE userKeynum =#{userKeynum}
+</select>
+
+
+
+
+<!--장바구니 중복물품 여부 가져오기 -->
+<select id="sameCartProduct" parameterType="ProdCartDTO" resultType="int">
+   SELECT count(*) FROM prodCart
+   WHERE userKeynum=#{userKeynum} AND prodKeyNum=#{prodKeyNum}
+</select>
+
+
+<!--1)만약 중복된물품이 있다면 수량 업데이트 해주기  -->
+<update id="updateCart" parameterType="ProdCartDTO">
+   UPDATE prodCart
+   SET prodCartCount = prodCartCount+#{prodCartCount}
+   WHERE userKeynum=#{userKeynum} AND prodKeyNum=#{prodKeyNum}
+</update>
+
+
+<!-- 2)만약 중복된 물품이 없다면 장바구니에 넣기-->
+<insert id="insertCart" parameterType="ProdCartDTO">
+   INSERT INTO prodCart(prodCartNum,prodKeyNum,userKeynum,prodCartCount,prodCartCheck)
+   VALUES(prodCartNum_seq.nextval,#{prodKeyNum},#{userKeynum},#{prodCartCount},'true')
+</insert>
+
+<!--장바구니 가져오기-->
+<select id="cartList" resultType="ProdCartDTO" parameterType="int">
+   SELECT PC.* , PD.prodImage, PD.prodPrice,PD.prodTitle,PD.prodState,PD.prodStock
+   FROM prodCart PC, prod PD
+   WHERE PC.prodKeyNum=PD.prodKeyNum
+   AND userKeynum=#{userKeynum}
+</select>
+
+<!--장바구니 체크여부 변경하기 -->
+<update id="reverseCheck" parameterType="int" >
+    UPDATE prodCart
+    SET prodCartCheck = CASE WHEN prodCartCheck='true' THEN 'false'
+                            WHEN prodCartCheck='false' THEN 'true' END
+    WHERE prodCartNum=#{prodCartNum}
+    <!---->
+</update>
+
+<!-- 장바구니 모두 체크하기 -->
+<update id="cartAllCheck" parameterType="int">
+   UPDATE prodCart
+   SET prodCartCheck = 'true'
+   WHERE userKeynum=#{userKeynum}
+</update>
+
+<!-- 장바구니 모두 체크 해제하기 -->
+<update id="cartAllDecheck" parameterType="int">
+   UPDATE prodCart
+   SET prodCartCheck = 'false'
+   WHERE userKeynum=#{userKeynum}
+</update>
+
+
+
+<!--해당 사용자가 장바구니에서 선택한 상품만 가져오기  -오류 나는지 확인 ! --> 
+<select id="cartOrderList" parameterType="int" resultType="ProdDTO">
+   <![CDATA[
+   
+   select PD.*, PC.prodCartCount
+   from prod PD,  prodCart PC
+   WHERE PD.prodKeyNum = PC.prodKeyNum
+   AND PD.prodStock >=1 AND prodState='0'
+   AND userKeynum =#{userKeynum} AND prodCartCheck='true'
+   
+   
+     ]]>
+</select>
+
+<!--장바구니 수량증가-->
+<update id="increaseCart" parameterType="int">
+   UPDATE prodCart
+   SET prodCartCount = prodCartCount+1
+   WHERE prodCartNum=#{prodCartNum}
+</update>
+
+<!--장바구니 수량 감소-->
+<update id="decreaseCart" parameterType="int">
+   UPDATE prodCart
+   SET prodCartCount = prodCartCount-1
+   WHERE prodCartNum=#{prodCartNum}
+</update>
+
+<!--장바구니 품목 삭제  1) 장바구니에서 삭제 눌렀을 때-->
+<delete id="deleteCart" parameterType="int">
+   DELETE FROM prodCart
+   WHERE prodCartNum=#{prodCartNum}
+</delete>
+<!--이거 prodCartNum이 리액트에서 key값으로 되어있어서 이렇게만 해도됨.-->
+
+<!--장바구니 전체 삭제 -->
+<delete id="deleteAllCart" parameterType="int">
+   DELETE FROM prodCart
+   WHERE userKeynum = #{userKeynum}
+</delete>
+
+
+<!--장바구니 품목 삭제 2) 구매했을 때 장바구니 비워주기-->
+<delete id="deleteByOrder" parameterType="ProdOrderDetailDTO">
+   delete from prodCart
+   WHERE userKeynum = #{userKeynum} AND prodKeyNum = #{prodKeyNum}
+</delete>
+
+<!--통합주문정보 넣기 -->
+<insert id="insertprodOrder" parameterType="ProdOrderDTO">
+   INSERT INTO prodOrder(prodOrderNum,userKeynum,pOrderRecName,pOrderRecAddr,pOrderContact,pOrderMessage,orderData)
+   VALUES(prodOrderNum_seq.nextval, #{userKeynum},#{pOrderRecName},#{pOrderRecAddr},#{pOrderContact},#{pOrderMessage},sysdate)
+</insert>
+
+<!--prodOrderNum가져오기-->
+<select id="getOrderNum" resultType="int">
+   select prodOrderNum_seq.currval
+   from dual
+</select>
+
+<!-- 상세주문 항목 넣기-->
+<insert id="insertDetail" parameterType="ProdOrderDetailDTO">
+   INSERT INTO prodOrderDetail(prodDetailNum,prodOrderNum,prodKeyNum,userKeynum,prodCartCount,prodOrderCheck,prodOrderMethod,prodpayAmt,prodPayCheck,prodDate,whetherReview)
+   VALUES(prodDetailNum_seq.nextval,#{prodOrderNum}, #{prodKeyNum},#{userKeynum},#{prodCartCount},'1',#{prodOrderMethod},#{prodpayAmt},'1',sysdate,'false')
+</insert>
+
+
+<!--결제내역 페이징을 위한 카운트 세기 -->
+<select id="orderListCount" parameterType="int" resultType="int">
+   select count(*) from prodOrderDetail
+   WHERE userKeynum=#{userKeynum}
+</select>
+
+<!--결제 내역 가져오기 + 페이징 -->
+<select id="orderList" parameterType="ProdPageDTO" resultType="ProdOrderDetailDTO">
+<![CDATA[
+   SELECT  a.rm, a.* 
+   FROM ( select rownum as rm, p.*, pd.prodImage, pd.prodTitle
+           from prodOrderDetail p, prod pd
+         WHERE p.prodKeyNum = pd.prodKeyNum
+                  AND  userKeynum=#{userKeynum}) a
+   WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+   ORDER BY  a.prodDetailNum DESC
+]]>
+</select>
+
+<!--후기 작성하기 -->
+<insert id="insertProdReview" parameterType="ProdReviewDTO">
+   INSERT INTO prodReview(prodReviewNum,userKeynum,prodKeyNum,prodReviewContent,prodReviewRating,prodReviewDate)
+   VALUES(prodReviewNum_seq.nextval,#{userKeynum},#{prodKeyNum},#{prodReviewContent},#{prodReviewRating},sysdate)
+</insert>
+
+<!--후기 작성 후 결제 detail 후기 작성 여부 True로 바꾸기-->
+<update id="makeReviewTrue" parameterType="int">
+   UPDATE prodOrderDetail
+   SET whetherReview='true'
+   WHERE prodDetailNum=#{prodDetailNum}
+</update>
+
+<!--상품상세정보에서 후기개수 가져오기 (페이징)-->
+<select id="prodReviewCount" parameterType="int" resultType="int">
+   SELECT count(*)
+   FROM prodReview
+   WHERE prodKeyNum = #{prodKeyNum}
+</select>
+
+
+<!-- 후기리스트 가져오기 -->
+<select id="prodReviewList" parameterType="ProdPageDTO" resultType="ProdReviewDTO">
+<![CDATA[
+    SELECT  a.rm, a.* 
+    FROM ( select rownum as rm, p.*, u.userNick
+        from prodReview p,userInfo u
+        WHERE p.userKeynum = u.userKeynum
+        AND prodKeyNum=#{prodKeyNum}) a
+    WHERE a.rm>=#{startRow} AND a.rm<=#{endRow}
+    ORDER BY prodReviewNum DESC
+]]>
+</select>
+
+
+<!--각 상품에 대한 평균별점 구하기-->
+<select id="avgOfProd" parameterType="int" resultType="float">
+   SELECT ROUND(AVG(prodReviewRating),1) 
+   FROM prodReview
+   WHERE prodKeynum=#{prodKeynum}
+</select>
+
+
+<!--header에서 표시할 장바구니에 담긴 상품 개수-->
+<select id="countCart" parameterType="int" resultType="int">
+   select count(*) 
+   from prodCart 
+   where userKeynum =#{userKeynum}
+</select>
+
+
+<!--상품구매 후 재고 수량 빼기-->
+
+<update id="stockUpdate" parameterType="map">
+   UPDATE prod 
+   SET prodStock = prodStock -#{prodCartCount}
+   WHERE prodKeyNum=#{prodKeyNum}
+</update>
+</mapper>

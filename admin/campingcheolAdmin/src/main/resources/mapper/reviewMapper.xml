@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.admin.campingcheol.manage.dao.ReviewDAO">
+	
+	<!-- 캠핑용품 후기 갯수 -->
+	<select id="countProdReview" parameterType="map" resultType="int">
+		SELECT count(*)
+		    FROM(SELECT b.*
+			    FROM(SELECT a.*
+			        FROM (SELECT z.*
+						FROM(SELECT t2.prodReviewNum, t2.prodKeyNum, t3.prodImage,t3.prodTitle, t1.userID, t1.userNick, t2.prodReviewContent,t2.prodReviewRating, t2.prodReviewDate
+						    FROM userInfo t1
+						    INNER JOIN prodReview t2 ON t1.userKeynum = t2.userKeynum
+						    INNER JOIN prod t3 ON t2.prodKeyNum = t3.prodKeyNum
+						    ORDER BY prodReviewNum desc)z
+						<if test='startDate != "a" and endDate != "a"'>    
+						WHERE z.prodReviewDate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            </if>
+			            )a
+			        <if test="table eq 'zzz'">
+			        </if>    
+				    <if test="table eq 'aaa'">
+			        	WHERE a.prodReviewRating = 5
+			        </if>
+			        <if test="table eq 'bbb'">
+			        	WHERE a.prodReviewRating = 4
+			        </if>
+			        <if test="table eq 'ccc'">
+			        	WHERE a.prodReviewRating = 3
+			        </if>
+			        <if test="table eq 'ddd'">
+			        	WHERE a.prodReviewRating = 2
+			        </if>  
+			        <if test="table eq 'eee'">
+			        	WHERE a.prodReviewRating = 1
+			        </if>          
+			        )b
+			    <if test="searchWord != null">
+		        	<if test="searchKey eq 'prodKeyNum'">
+		        		WHERE b.prodKeyNum LIKE #{searchWord}
+		        	</if>
+		        	<if test="searchKey eq 'prodTitle'">
+		        		WHERE b.prodTitle LIKE '%'||#{searchWord}||'%'
+		        	</if>
+		        	<if test="searchKey eq 'userID'">
+		        		WHERE b.userID = #{searchWord}
+		        	</if>
+		    	</if>  
+			    )c
+	</select>
+	
+	<!-- 캠핑용품 후기 리스트-->
+	<select id="listAllProdReview" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="ReviewDTO">
+		SELECT d.*
+		FROM(SELECT rownum as rm, c.*
+		    FROM(SELECT b.*
+			    FROM(SELECT a.*
+			        FROM (SELECT z.*
+						FROM(SELECT t2.prodReviewNum, t2.prodKeyNum, t3.prodImage,t3.prodTitle, t1.userID, t1.userNick, t2.prodReviewContent,t2.prodReviewRating, t2.prodReviewDate
+						    FROM userInfo t1
+						    INNER JOIN prodReview t2 ON t1.userKeynum = t2.userKeynum
+						    INNER JOIN prod t3 ON t2.prodKeyNum = t3.prodKeyNum
+						    ORDER BY prodReviewNum desc)z
+						<if test='startDate != "a" and endDate != "a"'>    
+						WHERE z.prodReviewDate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            </if>
+			            )a
+			        <if test="table eq 'zzz'">
+			        </if>    
+				    <if test="table eq 'aaa'">
+			        	WHERE a.prodReviewRating = 5
+			        </if>
+			        <if test="table eq 'bbb'">
+			        	WHERE a.prodReviewRating = 4
+			        </if>
+			        <if test="table eq 'ccc'">
+			        	WHERE a.prodReviewRating = 3
+			        </if>
+			        <if test="table eq 'ddd'">
+			        	WHERE a.prodReviewRating = 2
+			        </if>  
+			        <if test="table eq 'eee'">
+			        	WHERE a.prodReviewRating = 1
+			        </if>          
+			        )b
+			    <if test="searchWord != null">
+		        	<if test="searchKey eq 'prodKeyNum'">
+		        		WHERE b.prodKeyNum LIKE #{searchWord}
+		        	</if>
+		        	<if test="searchKey eq 'prodTitle'">
+		        		WHERE b.prodTitle LIKE '%'||#{searchWord}||'%'
+		        	</if>
+		        	<if test="searchKey eq 'userID'">
+		        		WHERE b.userID = #{searchWord}
+		        	</if>
+		    	</if>  
+			    )c
+			)d
+		WHERE d.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 캠핑용품 후기 삭제 -->
+	<delete id="deleteProdReview" parameterType="string">
+		DELETE FROM prodReview
+		WHERE prodReviewNum=#{prodReviewNum}
+	</delete>
+	
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<!-- 캠핑장 후기 갯수 -->
+	<select id="countCampReview" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM(SELECT rownum as rm, t3.*
+			FROM(SELECT t2.*
+			    FROM(SELECT t1.*
+			    FROM(SELECT z.*
+			    	FROM(SELECT b.campRewNum, c.campKeyNum, c.campImg, c.campName, a.userID, a.userNick, b.campReviewContent, b.campReviewRating, b.campReviewDate
+			            FROM userinfo a
+			            INNER JOIN campReview b ON a.userkeynum = b.userkeynum
+			            INNER JOIN campsite c ON b.campKeyNum = c.campKeyNum
+			            ORDER BY campRewNum DESC)z
+			            <if test='startDate != "a" and endDate != "a"'>    
+						WHERE z.campReviewDate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            </if>
+			            )t1
+			    <if test="table eq 'zzz'">
+			    </if>    
+				<if test="table eq 'aaa'">
+			    	WHERE t1.campReviewRating = 5 
+			    </if>        
+			    <if test="table eq 'bbb'">
+			    	WHERE t1.campReviewRating = 4 
+			    </if>             
+			    <if test="table eq 'ccc'">
+			    	WHERE t1.campReviewRating = 3 
+			    </if>     
+			    <if test="table eq 'ddd'">
+			    	WHERE t1.campReviewRating = 2 
+			    </if>     
+			    <if test="table eq 'eee'">
+			    	WHERE t1.campReviewRating = 1 
+			    </if>             
+			    )t2
+			<if test="searchWord != null">
+		    	<if test="searchKey eq 'campKeynum'">
+		        	WHERE t2.campKeyNum LIKE #{searchWord}
+		    	</if>
+		    	<if test="searchKey eq 'campName'">
+		        	WHERE t2.campName LIKE '%'||#{searchWord}||'%'
+		    	</if>
+		    	<if test="searchKey eq 'userID'">
+		        	WHERE t2.userID = #{searchWord}
+		   		</if>
+		    </if>  
+			)t3
+		)t4
+	</select>
+	
+	<!-- 캠핑장 후기 리스트-->
+	<select id="listAllCampReview" parameterType="com.admin.campingcheol.common.page.PageDTO" resultType="ReviewDTO">
+		SELECT t4.*
+		FROM(SELECT rownum as rm, t3.*
+			FROM(SELECT t2.*
+				FROM(SELECT t1.*
+				FROM(SELECT z.*
+			    	FROM(SELECT b.campRewNum, c.campKeyNum, c.campImg, c.campName, a.userID, a.userNick, b.campReviewContent, b.campReviewRating, b.campReviewDate
+			            FROM userinfo a
+			            INNER JOIN campReview b ON a.userkeynum = b.userkeynum
+			            INNER JOIN campsite c ON b.campKeyNum = c.campKeyNum
+			            ORDER BY campRewNum DESC)z
+			            <if test='startDate != "a" and endDate != "a"'>    
+						WHERE z.campReviewDate BETWEEN TO_DATE(#{startDate}, 'YYYYMMDD') AND TO_DATE(#{endDate})
+			            </if>
+					)t1
+			    <if test="table eq 'zzz'">
+			    </if>    
+				<if test="table eq 'aaa'">
+			    	WHERE t1.campReviewRating = '5'
+			    </if>        
+			    <if test="table eq 'bbb'">
+			    	WHERE t1.campReviewRating = '4' 
+			    </if>             
+			    <if test="table eq 'ccc'">
+			    	WHERE t1.campReviewRating = '3'
+			    </if>     
+			    <if test="table eq 'ddd'">
+			    	WHERE t1.campReviewRating = '2'
+			    </if>     
+			    <if test="table eq 'eee'">
+			    	WHERE t1.campReviewRating = '1'
+			    </if>             
+			    )t2
+			<if test="searchWord != null">
+		    	<if test="searchKey eq 'campKeynum'">
+		        	WHERE t2.campKeyNum LIKE #{searchWord}
+		    	</if>
+		    	<if test="searchKey eq 'campName'">
+		        	WHERE t2.campName LIKE '%'||#{searchWord}||'%'
+		    	</if>
+		    	<if test="searchKey eq 'userID'">
+		        	WHERE t2.userID = #{searchWord}
+		   		</if>
+		    </if>  
+			)t3
+		)t4
+		WHERE t4.rm BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 캠핑장 후기 삭제 -->
+	<delete id="deleteCampReview" parameterType="string">
+		DELETE FROM campReview
+		WHERE campRewNum=#{campRewNum}
+	</delete>
+	
+	
+	
+</mapper>

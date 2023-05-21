@@ -1,0 +1,241 @@
+.layout {
+  font-family: "SCDream1";
+  width: 1430px;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.layoutTop {
+  width: 100%;
+  height: auto;
+}
+
+.logo {
+  width: 400px;
+  height: 200px;
+  margin: auto;
+}
+
+.logo img {
+  width: 400px;
+  height: 200px;
+  margin-bottom: -200px;
+}
+
+.minibutton > * {
+  float: left;
+}
+
+.minibutton {
+  width: 400px;
+  float: right;
+  margin-top: -4.6%;
+}
+
+.welcome {
+  display: inline-block;
+  width: 200px;
+  height: 58px;
+  line-height: 58px;
+  margin: 0;
+  padding: 0;
+}
+
+.cart_weather,
+.btns {
+  /* float: right; */
+}
+
+.cart_weather {
+  margin-top: 7.4px;
+}
+
+.cart_weather button:nth-of-type(1) {
+  background-color: white;
+}
+
+.weather {
+  width: 90px;
+  height: 90px;
+  margin-bottom: -200px;
+  float: right;
+  margin-right: 80px;
+  margin-top: 100px;
+}
+
+.btns {
+  margin-top: 10px;
+}
+
+.minibutton button {
+  background-color: rgba(242 186 31);
+  border: none;
+  margin: 5px;
+  padding: 7px 20px;
+  border-radius: 10%;
+  font-weight: 800;
+  font-family: "SCDream1";
+}
+
+.toolbar {
+  width: 100%;
+  height: 72px;
+  background-color: rgb(0 110, 82);
+  clear: both;
+}
+
+.toolbarText {
+  display: inline-block;
+  width: 24%;
+  text-align: center;
+  line-height: 70px;
+  font-weight: 550;
+  font-size: 14pt;
+}
+
+.toolbarTextdiv {
+  width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: rgb(0 110, 82);
+}
+
+.toolbarText a {
+  text-decoration: none;
+  color: white;
+}
+
+.bottom {
+  height: 175px;
+  width: 100%;
+  background-color: rgb(0 110, 82);
+  bottom: 0px;
+  margin: 0 auto;
+  font-family: "SCDream1";
+  margin-top: 200px;
+  clear: both;
+}
+
+.bottomText {
+  margin: 0 auto;
+  height: 100%;
+  width: 1400px;
+  background-color: rgb(0 110, 82);
+  line-height: 70px;
+}
+
+.bottomText p {
+  float: left;
+  width: 24%;
+  text-align: center;
+}
+
+.bottom a {
+  text-decoration: none;
+  color: white;
+}
+
+/* 날씨 관련  */
+
+.weatherDropDown {
+  /* display: none; */
+  display: inline-block;
+
+  position: fixed;
+  /* width: 500px; */
+  height: 100px;
+  /* background-color: aqua; */
+  left: 30px;
+  bottom: 60px;
+  z-index: 999;
+  /* border: solid; */
+}
+
+.weatherDropDown img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50pt;
+  cursor: pointer;
+}
+
+.weatherInfo {
+  width: 400px;
+  border: solid;
+  height: 300px;
+  position: fixed;
+  right: 50px;
+  display: inline-block;
+}
+
+.weatherInfo p {
+  float: left;
+}
+
+.weatherInfo div {
+  clear: both;
+}
+
+.weatherTab {
+  width: 600px;
+  border: solid gray 0.3px;
+
+  display: inline-block;
+  position: fixed;
+  /* background-color: aqua; */
+  left: 100px;
+  bottom: 90px;
+  z-index: 99;
+}
+
+.chart {
+  width: 300px;
+}
+
+.scaleArea {
+  width: 400px;
+  /* margin-top: -500px; */
+  /* border: solid; */
+  height: 200px;
+  display: no;
+}
+
+.dayPaddle {
+  /* border: solid; */
+  width: 385px;
+  height: 180px;
+  display: flex; /* 가로 방향으로 요소를 배치합니다. */
+  justify-content: center; /* 가운데 정렬합니다. */
+}
+
+.onetimebar {
+  margin: auto;
+  /* border: solid 0.2px; */
+  width: 14%;
+  height: 100%;
+  float: left;
+}
+
+.weathercom {
+  /* border: solid 0.1px; */
+  width: 100%;
+  height: 30%;
+  margin: 3.4px auto;
+  line-height: 35pt;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.weathercom img {
+  width: 70%;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.locationDrop {
+  position: absolute;
+  /* border: solid; */
+  margin-top: 183px;
+  margin-left: 470px;
+  /* background-color: ; */
+}
